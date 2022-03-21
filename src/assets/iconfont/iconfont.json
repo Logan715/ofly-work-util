@@ -1,0 +1,93 @@
+{
+  "id": "2369636",
+  "name": "ofly-vue",
+  "font_family": "iconfont",
+  "css_prefix_text": "el-icon-ofly-",
+  "description": "ofly-vue-demo 测试用",
+  "glyphs": [
+    {
+      "icon_id": "8952769",
+      "name": "ellipsis-v",
+      "font_class": "ellipsis-v",
+      "unicode": "e801",
+      "unicode_decimal": 59393
+    },
+    {
+      "icon_id": "15617235",
+      "name": "transform",
+      "font_class": "transform",
+      "unicode": "e8b5",
+      "unicode_decimal": 59573
+    },
+    {
+      "icon_id": "11529566",
+      "name": "动画",
+      "font_class": "animation",
+      "unicode": "e7c7",
+      "unicode_decimal": 59335
+    },
+    {
+      "icon_id": "8228072",
+      "name": "Transition-03",
+      "font_class": "transition",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "3561757",
+      "name": "uE951-res-slot",
+      "font_class": "slot",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "1308207",
+      "name": "sync",
+      "font_class": "sync",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "426077",
+      "name": "export network_HD",
+      "font_class": "request",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "11891796",
+      "name": "model",
+      "font_class": "v-model",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "18670886",
+      "name": "tool set",
+      "font_class": "tools",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "13744032",
+      "name": "vue",
+      "font_class": "vue",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    },
+    {
+      "icon_id": "6808025",
+      "name": "Mouse",
+      "font_class": "mouse",
+      "unicode": "ed18",
+      "unicode_decimal": 60696
+    },
+    {
+      "icon_id": "14134975",
+      "name": "Exit without change",
+      "font_class": "exit",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
