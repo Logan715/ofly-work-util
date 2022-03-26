@@ -1,4 +1,1 @@
-
-
-exports.default = {
-};
+exports.default = {};

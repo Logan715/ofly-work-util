@@ -14,15 +14,18 @@ const routes = [
         path: "*",
         name: "home",
         component: () => import("../Layout/index.vue"),
-        children: [
-            {
-                path: "/base64",
-                name: "base64",
-                component: () => import("@/modules/Base64/index.vue")
-            },
-        ]
-    }
-];
+    children
+:
+[
+    {
+        path: "/base64",
+        name: "base64",
+        component: () => import("@/modules/Base64/index.vue")
+},
+]
+}
+]
+;
 
 export default new VueRouter({
     routes

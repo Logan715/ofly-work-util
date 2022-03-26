@@ -24,6 +24,8 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/webpack-env": "^1.16.3",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -34,7 +36,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "mocker-api": "^2.8.1",
+    "mocker-api": "^2.8.3",
     "mockjs": "^1.1.0",
     "style-resources-loader": "^1.4.1",
     "terser-webpack-plugin": "^2.3.6",

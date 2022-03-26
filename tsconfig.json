@@ -16,14 +16,14 @@
     "sourceMap": true,
     "typeRoots": ["/@types", "./node_modules/@types"],
     "baseUrl": ".",
-    "types": ["webpack-env"],
+    "types": ["webpack-env", "node"],
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
-    "src/**/*",
+    "src/**/*.js",
   ],
   "exclude": ["node_modules", "dist"]
 }
