@@ -2,8 +2,7 @@ import {EventEmitter} from "events"
 
 const emitter = new EventEmitter()
 
-export const setSessionUser = user =
->
+export const setSessionUser = user =>
 {
     if (user) {
         sessionStorage.setItem("session-user", JSON.stringify(user))
@@ -11,34 +10,29 @@ export const setSessionUser = user =
     }
 }
 
-export const getSessionUser = () =
->
+export const getSessionUser = () =>
 {
     return JSON.parse(sessionStorage.getItem("session-user"))
 }
 
-const getLoginId = () =
->
+const getLoginId = () =>
 {
     const {loginId} = getSessionUser() || {}
     return loginId
 }
 
-export const removeUserSession = () =
->
+export const removeUserSession = () =>
 {
     sessionChangeEmitter(null)
     sessionStorage.removeItem("session-user")
 }
 
-export const sessionChangeListener = func =
->
+export const sessionChangeListener = func =>
 {
     emitter.addListener("sessionUserChange", func)
 }
 
-const sessionChangeEmitter = user =
->
+const sessionChangeEmitter = user =>
 {
     emitter.emit("sessionUserChange", user)
 }

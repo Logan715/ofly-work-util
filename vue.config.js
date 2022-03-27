@@ -42,14 +42,7 @@ module.exports = {
         // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
         before(app) {
             // @ts-ignore
-            apiMocker(app, path.resolve("./mocker/index.js"), {
-                proxy: {
-                    "/oflywork/(.*)": "127.0.0.1:18080",
-                  },
-                  pathRewrite: {
-                  },
-                changeHost: true
-            });
+            apiMocker(app, path.resolve("./mocker/index.js"));
         }
     },
 

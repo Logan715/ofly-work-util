@@ -10,8 +10,9 @@ const proxy = {
     _proxy: {
         priority: "proxy",
         proxy: {
-            "/repos/(.*)": "https://api.github.com/"
-            // '/repos/jaywcjlove/webpack-api-mocker': 'https://api.github.com/repos/jaywcjlove/webpack-api-mocker',
+            "/oflywork/(.*)": "http://192.168.0.103:18080/",
+        },
+        pathRewrite: {
         },
         changeHost: true
     },

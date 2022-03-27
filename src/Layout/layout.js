@@ -1,5 +1,4 @@
-export const findActiveMenuKey = (menus, activePath) =
->
+export const findActiveMenuKey = (menus, activePath) =>
 {
     for (let index = 0; index < menus.length; index++) {
         const {id, path, children} = menus[index];
@@ -18,8 +17,7 @@ export const findActiveMenuKey = (menus, activePath) =
 }
 ;
 
-export const findMenu = (menus, primaryKey) =
->
+export const findMenu = (menus, primaryKey) =>
 {
     for (let index = 0; index < menus.length; index++) {
         const {id, children} = menus[index];

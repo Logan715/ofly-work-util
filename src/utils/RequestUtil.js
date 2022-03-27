@@ -21,8 +21,7 @@ const defaultConfig = {
     timeout: 10000,
     withCredentials: false
 };
-export const post = (url, params, config = {}) =
->
+export const post = (url, params, config = {}) =>
 {
     return axios
         .post(url, params, {...defaultConfig, ...config})
@@ -33,8 +32,7 @@ export const post = (url, params, config = {}) =
 }
 ;
 
-export const get = (url, params, config = {}) =
->
+export const get = (url, params, config = {}) =>
 {
     return axios
         .get(url, params, {...defaultConfig, ...config})
@@ -45,8 +43,7 @@ export const get = (url, params, config = {}) =
 }
 ;
 
-const errorCatch = error =
->
+const errorCatch = error =>
 {
     const {response} = error;
     const {status, statusText} = response;
@@ -64,15 +61,13 @@ const errorCatch = error =
     ;
 }
 ;
-export const httpStatusErrorListener = func =
->
+export const httpStatusErrorListener = func =>
 {
     emitter.addListener("httpError", func);
 }
 ;
 
-const httpStatusErrorEmitter = response =
->
+const httpStatusErrorEmitter = response =>
 {
     emitter.emit("httpError", response);
 }
