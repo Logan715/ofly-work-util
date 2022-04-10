@@ -3,5 +3,10 @@
     "id": "Base64",
     "icon": "el-icon-ofly-v-model iconfont",
     "name": "base64转码"
+  },
+  {
+    "id": "OCR",
+    "icon": "el-icon-ofly-v-model iconfont",
+    "name": "OCR识别"
   }
 ]

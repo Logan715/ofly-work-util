@@ -10,7 +10,8 @@ const proxy = {
     _proxy: {
         priority: "proxy",
         proxy: {
-            "/oflywork/(.*)": "http://192.168.0.103:18080/",
+            "/oflywork/(.*)": "http://127.0.0.1:18080/",
+            // "/oflywork/(.*)": "http://127.0.0.1:12345/",
         },
         pathRewrite: {
         },
