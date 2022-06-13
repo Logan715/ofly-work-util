@@ -68,12 +68,12 @@ export default {
       this.loading = false;
     },
     async analysis() {
-     this.loaidng = true;
+     this.loading = true;
      try {
        await analysisPlan({...this.user, planId: this.planId})
       setTimeout(this.getAnalysisDateList, 50)
      } catch(e) {console.log(e)}
-     this.loaidng = false;
+     this.loading = false;
     },
     async getAnalysisPlanResult() {
       this.loading = true;

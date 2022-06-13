@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <el-button type="primary" @click="handleTask" style="margin-bottom: 20px">获取完成的任务</el-button>
     <el-input type="textarea" :value="finishTaskTitles" :autosize="{maxRows: 10, minRows: 10}"></el-input>
   </div>
@@ -26,12 +26,12 @@ export default {
   },
   methods: {
     async getFinishedTaskList() {
-     this.loaidng = true;
+     this.loading = true;
      try {
        const { records } = await getFinishedTaskList({...this.user})
        this.result = records;
      } catch(e) {console.log(e)}
-     this.loaidng = false;
+     this.loading = false;
     },
     handleTask() {
       this.getFinishedTaskList()
