@@ -50,6 +50,14 @@ export default {
       return _resultInfo;
     }
   },
+  watch: {
+    analysisDateList(val) {
+      if(val?.length) {
+        this.selectDate = val[0];
+        this.getAnalysisPlanResult();
+      }
+    }
+  },
   mounted() {
     WebSockeUtil.subscribe("/zentao/analysis", response=> {
       const body = JSON.parse(response.body)

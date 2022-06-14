@@ -2,7 +2,9 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 
 class WebSocketUtil {
-  url="http://127.0.0.1:18080/oflywork/ws";
+  url= process.env.NODE_ENV !== "production"?
+    "http://127.0.0.1:18080/oflywork/ws":
+    "http://127.0.0.1:12345/oflywork/ws";
   websocket = null;
   stompClient = null;
   isConnect = false;
@@ -24,7 +26,7 @@ class WebSocketUtil {
       },
       error => {
         this.isConnect = false;
-        console.error('连接失败， 重新尝试')
+        console.error(`连接失败， 重新尝试: ${this.url}`)
         setTimeout(()=>{
           this.connect()
         }, 1000)
