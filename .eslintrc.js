@@ -19,6 +19,7 @@ module.exports = {
         // allow async-await
         "vue/html-indent": "off",
         "vue/component-name-in-template-casing": "off",
+        "vue/require-default-prop": "off",
         "generator-star-spacing": "off",
         // allow debugger during development
         "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",

@@ -12,8 +12,8 @@ export const getAnalysisDateList = (planId) => {
   return RequestUtil.get("/oflywork/zentao/analysis/plan/analysisDateList", {params: {planId}});
 }
 
-export const getAnalysisPlanResult = (planId, date) => {
-  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, date});
+export const getAnalysisPlanResult = (planId, dates) => {
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates});
 }
 
 

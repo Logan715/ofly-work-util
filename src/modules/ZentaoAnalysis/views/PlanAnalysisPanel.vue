@@ -5,10 +5,13 @@
       <el-button type="primary" class="analysis-btn" @click="handleAnalysis">分析</el-button>
     </div>
     <div style="margin-bottom: 12px;margin-top:12px;">
-      已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDate ===date ?'priamry':'info'" class="tag" @click.native="selectDate=date">{{ date }}</el-tag>
+      已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
     </div>
-    <el-button type="primary" style="margin-bottom: 12px;" @click="getAnalysisPlanResult" :disabled="!selectDate">获取分析报告</el-button>
-    <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input>
+    <el-button type="primary" style="margin-bottom: 12px;" @click="getAnalysisPlanResult" :disabled="!canGetExport">获取分析报告</el-button>
+    <div></div>
+    <plan-analysis-card :data="result.story" title="需求" style="margin-right: 12px;"></plan-analysis-card>
+    <plan-analysis-card :data="result.bug" title="Bug"></plan-analysis-card>
+    <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>
 </template>
 <script>
@@ -17,9 +20,14 @@ import {
   getAnalysisDateList,
   getAnalysisPlanResult
 } from '../api'
+import PlanAnalysisCard from './PlanAnalysisCard.vue'
+import lodash from 'lodash'
 import WebSockeUtil from '@/utils/WebSockeUtil'
 
 export default {
+  components: {
+    PlanAnalysisCard
+  },
   props: {
     user: {
       type: Object,
@@ -30,12 +38,16 @@ export default {
     return {
       loading: false,
       planId: 342,
-      result: undefined,
+      result: {},
       analysisDateList: [],
       selectDate: undefined,
+      selectDates: [],
     }
   },
   computed: {
+    canGetExport() {
+      return this.selectDates?.length > 0
+    },
     resultInfo() {
       let _resultInfo = "";
       const { story, bug } = this.result || {};
@@ -53,7 +65,7 @@ export default {
   watch: {
     analysisDateList(val) {
       if(val?.length) {
-        this.selectDate = val[0];
+        this.selectDates = [val[0]]
         this.getAnalysisPlanResult();
       }
     }
@@ -112,7 +124,7 @@ export default {
     async getAnalysisPlanResult() {
       this.loading = true;
       try {
-        const { data } = await getAnalysisPlanResult(this.planId, this.selectDate)
+        const { data } = await getAnalysisPlanResult(this.planId, lodash.sortBy(this.selectDates).reverse())
         this.result = data
       } catch(e) {console.error(e);}
       this.loading = false;
@@ -125,6 +137,14 @@ export default {
         this.getAnalysisDateList()
       } else {
         this.analysisDateList = []
+      }
+    },
+    handleSelectDate(date) {
+      if(this.selectDates.length < 2) {
+        this.selectDates.push(date)
+      } else {
+        this.selectDates.shift();
+        this.selectDates.push(date);
       }
     },
     toStoryInfo(story) {
@@ -173,5 +193,8 @@ export default {
 }
 .analysis-btn {
   margin-left: 12px
+}
+.mb {
+  margin-bottom: 20px;
 }
 </style>
