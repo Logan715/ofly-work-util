@@ -17,6 +17,8 @@ import {
   getAnalysisDateList,
   getAnalysisPlanResult
 } from '../api'
+import WebSockeUtil from '@/utils/WebSockeUtil'
+
 export default {
   props: {
     user: {
@@ -48,6 +50,29 @@ export default {
       return _resultInfo;
     }
   },
+  mounted() {
+    WebSockeUtil.subscribe("/zentao/analysis", response=> {
+      const body = JSON.parse(response.body)
+      if(body.type === "success") {
+        this.$notify({
+          title: '成功',
+          message: '已经分析完成',
+          duration: 0,
+          type: 'success',
+          position: 'bottom-right'
+        })
+        this.getAnalysisDateList();
+      } else {
+        this.$notify.error({
+          title: '失败',
+          message: '失败了，稍后查问题',
+          duration: 0,
+          position: 'bottom-right'
+        })
+      }
+      
+    })
+  },
   /*
    {
         "planId": "342",
@@ -70,8 +95,9 @@ export default {
     async analysis() {
      this.loading = true;
      try {
-       await analysisPlan({...this.user, planId: this.planId})
-      setTimeout(this.getAnalysisDateList, 50)
+       const { note } = await analysisPlan({...this.user, planId: this.planId})
+      this.$message.success(note);
+      // setTimeout(this.getAnalysisDateList, 500)
      } catch(e) {console.log(e)}
      this.loading = false;
     },

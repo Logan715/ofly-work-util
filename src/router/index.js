@@ -14,6 +14,11 @@ const routes = [
         component: () => import("../__test/TestDemo.vue"),
     },
     {
+        path: "/test2",
+        name: "socket",
+        component: () => import("../__test/TestSocket.vue"),
+    },
+    {
         path: "*",
         name: "home",
         component: () => import("../Layout/index.vue"),

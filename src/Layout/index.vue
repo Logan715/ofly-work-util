@@ -39,6 +39,7 @@ import AuthUtil from "../utils/AuthUtil";
 import { findMenu } from "./layout";
 import modulesX from "../modules/index";
 import menu  from "@/menu.json"
+import WebSockeUtil from '@/utils/WebSockeUtil'
 export default {
     components: {
         "layout-header": LayoutHeader,
@@ -53,11 +54,16 @@ export default {
             tabs: []
         };
     },
-
     computed: {
         menus: function() {
             return menu;
         }
+    },
+    mounted() {
+        WebSockeUtil.connect();
+    },
+    destroyed() {
+        WebSockeUtil.disconnect();
     },
     methods: {
         // onExit() {
