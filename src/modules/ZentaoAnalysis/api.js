@@ -1,4 +1,5 @@
 import RequestUtil from '@/utils/RequestUtil'
+import lodash from 'lodash'
 
 export const analysisPlan = ({userName, password, planId}) => {
   return RequestUtil.post("/oflywork/zentao/analysis/plan", {userName, password, planId});
@@ -13,7 +14,9 @@ export const getAnalysisDateList = (planId) => {
 }
 
 export const getAnalysisPlanResult = (planId, dates) => {
-  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates});
+  
+  const _dates = lodash.sortBy(Array.from(new Set(dates))).reverse()
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates: _dates});
 }
 
 

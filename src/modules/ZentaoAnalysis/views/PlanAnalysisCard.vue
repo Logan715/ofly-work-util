@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="title">{{ title }}</div>
+    <div class="title">{{ title }}({{ story.count }})</div>
     <div class="content">
       <div class="block">
         <div class="date ">{{ story.analysisDate }}</div>

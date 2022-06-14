@@ -21,7 +21,7 @@ import {
   getAnalysisPlanResult
 } from '../api'
 import PlanAnalysisCard from './PlanAnalysisCard.vue'
-import lodash from 'lodash'
+
 import WebSockeUtil from '@/utils/WebSockeUtil'
 
 export default {
@@ -124,7 +124,7 @@ export default {
     async getAnalysisPlanResult() {
       this.loading = true;
       try {
-        const { data } = await getAnalysisPlanResult(this.planId, lodash.sortBy(this.selectDates).reverse())
+        const { data } = await getAnalysisPlanResult(this.planId, this.selectDates)
         this.result = data
       } catch(e) {console.error(e);}
       this.loading = false;
