@@ -1,10 +1,12 @@
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-
+const envConfig = require("../../env");
+const options = process.env;
+const envConfigEntity = envConfig[options.VUE_APP_ENV||'dev']
 class WebSocketUtil {
-  url= process.env.NODE_ENV !== "production"?
-    "http://127.0.0.1:18080/oflywork/ws":
-    "http://127.0.0.1:12345/oflywork/ws";
+  url= process.env.NODE_ENV === "production"?
+    "http://127.0.0.1:12345/oflywork/ws":
+    `${envConfigEntity.target}oflywork/ws`;
   websocket = null;
   stompClient = null;
   isConnect = false;

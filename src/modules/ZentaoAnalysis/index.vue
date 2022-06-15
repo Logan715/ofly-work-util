@@ -21,8 +21,8 @@ export default {
   data() {
     return {
       user: {
-        userName: 'chenmingzhi',
-        password: 'cmingzhi1990',
+        userName: '',
+        password: '',
       }
     }
   },

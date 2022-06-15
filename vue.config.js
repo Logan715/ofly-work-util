@@ -2,7 +2,9 @@ const apiMocker = require("mocker-api");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 let { version } = require("./package.json");
-
+const envConfig = require("./env");
+const options = process.env;
+const envConfigEntity = envConfig[options.VUE_APP_ENV||'dev']
 function addStyleResource(rule) {
     rule.use("style-resource")
         .loader("style-resources-loader")
@@ -42,7 +44,12 @@ module.exports = {
         // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
         before(app) {
             // @ts-ignore
-            apiMocker(app, path.resolve("./mocker/index.js"));
+            apiMocker(app, path.resolve("./mocker/index.js"), {
+                proxy: {
+                  "/oflywork/(.*)": envConfigEntity.target,
+                },
+                changeHost: true,
+              });
         }
     },
 

@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <div class="condition">
       <div class="label">计划编号：</div> <el-input class="input" placeholder="计划编号" v-model="planId" @blur="handlePlanChange"></el-input>
-      <el-button type="primary" class="analysis-btn" @click="handleAnalysis">分析</el-button>
+      <el-button type="primary" class="analysis-btn" @click="handleAnalysis" :disabled="!planId">分析</el-button>
     </div>
     <div style="margin-bottom: 12px;margin-top:12px;">
       已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       loading: false,
-      planId: 342,
+      planId: undefined,
       result: {},
       analysisDateList: [],
       selectDate: undefined,
