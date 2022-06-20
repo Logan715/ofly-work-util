@@ -7,12 +7,12 @@
         <div class="data">
             <div class="count count-left">
               <div class="sub-title">紧急</div>
-              <div class="divider notice">{{ story.urgentFinishedCount }}</div>
+              <div class="divider" :class="{'notice': story.urgentCount !== story.urgentFinishedCount}">{{ story.urgentFinishedCount }}</div>
               <div>{{ story.urgentCount }}</div>
             </div>
             <div class="count count-right">
               <div class="sub-title">所有</div>
-              <div class="divider notice">{{ story.finishedCount }}</div>
+              <div class="divider" :class="{'notice': story.count !== story.finishedCount}">{{ story.finishedCount }}</div>
               <div>{{ story.count }}</div>
             </div>
         </div>
@@ -37,11 +37,11 @@
         <div class="data">
             <div class="count count-left">
               <div class="sub-title">紧急新增</div>
-              <div class="compare-data notice">{{ story.urgentCount -compareStory.urgentCount }}</div>
+              <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}">{{ story.urgentCount -compareStory.urgentCount }}</div>
             </div>
             <div class="count count-right">
               <div class="sub-title">所有新增</div>
-              <div class="compare-data notice">{{ story.count - compareStory.count }}</div>
+              <div class="compare-data" :class="{'notice': story.count !== compareStory.count}">{{ story.count - compareStory.count }}</div>
             </div>
         </div>
       </div>

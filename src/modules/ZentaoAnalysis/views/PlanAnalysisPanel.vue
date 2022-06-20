@@ -81,7 +81,7 @@ export default {
           type: 'success',
           position: 'bottom-right'
         })
-        this.getAnalysisDateList();
+        setTimeout(this.getAnalysisDateList, 500)
       } else {
         this.$notify.error({
           title: '失败',

@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
+
 const routes = [
     {
         path: "/",
@@ -12,6 +13,11 @@ const routes = [
         path: "/test",
         name: "index",
         component: () => import("../__test/TestDemo.vue"),
+    },
+    {
+        path: "/test2",
+        name: "index",
+        component: () => import("../__test/Test.vue"),
     },
     {
         path: "*",
