@@ -1,6 +1,10 @@
 <template>
   <div class="card">
-    <div class="title">{{ title }}({{ story.count }})</div>
+    <div class="title">
+      {{ title }}({{ story.count }})
+    
+    <span class="notice" v-if="story.count-story.finishedCount">-剩余{{ story.count-story.finishedCount }}</span>
+    </div>
     <div class="content">
       <div class="block">
         <div class="date ">{{ story.analysisDate }}</div>
