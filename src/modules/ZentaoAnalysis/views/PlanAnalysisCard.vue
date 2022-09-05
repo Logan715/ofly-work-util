@@ -100,13 +100,14 @@ export default {
     display: flex;
     flex-direction: column;
     border-left: 1px solid #d9d9d9;
+    width: 100%;
   }
   .date {
      font-size: 20px;
      padding: 8px;
      background-color: #3c60bd;
      color:white;
-     font-weight: 500px;
+     font-weight: 500;
   }
   .date-divider {
     border-left: 1px solid #d9d9d9;
