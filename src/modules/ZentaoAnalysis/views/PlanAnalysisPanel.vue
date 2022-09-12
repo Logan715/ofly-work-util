@@ -11,7 +11,7 @@
     <div></div>
     <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
     <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList"></plan-analysis-card>
-    <plan-analysis-compare-list :type="type" :data="compareList" />
+    <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" />
     <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>
 </template>
