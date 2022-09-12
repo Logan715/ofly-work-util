@@ -9,8 +9,9 @@
     </div>
     <el-button type="primary" style="margin-bottom: 12px;" @click="getAnalysisPlanResult" :disabled="!canGetExport">获取分析报告</el-button>
     <div></div>
-    <plan-analysis-card :data="result.story" title="需求" style="margin-right: 12px;"></plan-analysis-card>
-    <plan-analysis-card :data="result.bug" title="Bug"></plan-analysis-card>
+    <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
+    <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList"></plan-analysis-card>
+    <plan-analysis-compare-list :type="type" :data="compareList" />
     <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>
 </template>
@@ -18,15 +19,17 @@
 import { 
   analysisPlan, 
   getAnalysisDateList,
-  getAnalysisPlanResult
+  getAnalysisPlanResult,
+  getCompareList
 } from '../api'
 import PlanAnalysisCard from './PlanAnalysisCard.vue'
-
+import PlanAnalysisCompareList from './PlanAnalysisCompareList.vue'
 import WebSockeUtil from '@/utils/WebSockeUtil'
 
 export default {
   components: {
-    PlanAnalysisCard
+    PlanAnalysisCard,
+    PlanAnalysisCompareList
   },
   props: {
     user: {
@@ -42,9 +45,16 @@ export default {
       analysisDateList: [],
       selectDate: undefined,
       selectDates: [],
+      compareList: [],
+      type: undefined,
     }
   },
   computed: {
+    condition() {
+      return {
+        planId: this.planId
+      }
+    },
     canGetExport() {
       return this.selectDates?.length > 0
     },
@@ -168,7 +178,20 @@ export default {
         _bugInfo+= `\n新增1-2级bug：${currentBug.urgentCount - compareBug.urgentCount} 个，整体bug新增: ${currentBug.count - compareBug.count} 个` 
       }
       return _bugInfo + "\n";
-    } 
+    } ,
+    async handleCompareList(params) {
+      this.loading = true;
+      try {
+        const { data } = await getCompareList({
+          planId: this.planId,
+          dates: this.selectDates,
+          ...params
+        })
+        this.type = params.type
+        this.compareList = data
+      } catch(e) {console.error(e);}
+      this.loading = false;
+    }
     
   }
 }

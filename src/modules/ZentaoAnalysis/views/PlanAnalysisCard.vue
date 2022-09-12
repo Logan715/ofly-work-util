@@ -3,7 +3,7 @@
     <div class="title">
       {{ title }}({{ story.count }})
     
-    <span class="notice" v-if="story.count-story.finishedCount">-剩余{{ story.count-story.finishedCount }}</span>
+    <span class="notice" v-if="story.count-story.finishedCount" @click="handleCompare('unFinished')">-剩余{{ story.count-story.finishedCount }}</span>
     </div>
     <div class="content">
       <div class="block">
@@ -41,11 +41,11 @@
         <div class="data">
             <div class="count count-left">
               <div class="sub-title">紧急新增</div>
-              <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}">{{ story.urgentCount -compareStory.urgentCount }}</div>
+              <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}" @click="handleCompare('urgentAdd')">{{ story.urgentCount -compareStory.urgentCount }}</div>
             </div>
             <div class="count count-right">
               <div class="sub-title">所有新增</div>
-              <div class="compare-data" :class="{'notice': story.count !== compareStory.count}">{{ story.count - compareStory.count }}</div>
+              <div class="compare-data" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
             </div>
         </div>
       </div>
@@ -55,6 +55,10 @@
 <script>
 export default {
   props: {
+    type: {
+      type: String,
+      default: ""
+    },
     data: {
       type: Array,
       default() {return []}
@@ -73,6 +77,15 @@ export default {
     },
     compareStory() {
       return this.data?.length?this.data[1]: {}
+    },
+    
+  },
+  methods: {
+    handleCompare(state) {
+      this.$emit('click', {
+        type: this.type,
+        state
+      })
     }
   }
 }
@@ -143,6 +156,7 @@ export default {
   }
   .notice {
     color: red;
+    cursor: pointer;
   }
   .compare-data {
     flex: 1;

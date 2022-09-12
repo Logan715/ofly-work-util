@@ -19,6 +19,16 @@ export const getAnalysisPlanResult = (planId, dates) => {
   return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates: _dates});
 }
 
+export const getCompareList = ({
+  planId,
+  type,
+  state,
+  dates,
+}) => {
+  const _dates = lodash.sortBy(Array.from(new Set(dates)))
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/getCompareList", {planId, type, state, dates: _dates});
+}
+
 
 
 
