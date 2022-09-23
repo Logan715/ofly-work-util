@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data" border>
+  <el-table :data="data" border stripe header-row-class-name="ofly-table-head">
     <el-table-column type="index" width="50" align="center" />
     <el-table-column prop="bugId" v-if="isBug" label="bugID" width="80" align="center">
       <template #default="{ row }">

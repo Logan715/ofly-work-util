@@ -8,9 +8,10 @@
       已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
     </div>
     <el-button type="primary" style="margin-bottom: 12px;" @click="getAnalysisPlanResult" :disabled="!canGetExport">获取分析报告</el-button>
-    <div></div>
-    <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
-    <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList"></plan-analysis-card>
+    <div>
+      <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
+      <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList"></plan-analysis-card>
+    </div>
     <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" />
     <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>

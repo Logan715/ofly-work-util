@@ -5,11 +5,12 @@ import router from "./router/index.js";
 import store from "./store";
 import "element-ui/lib/theme-chalk/index.css";
 import "./assets/iconfont/iconfont.css";
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
 import "@/assets/theme/normal.less"
 import RequestUtil from "./utils/RequestUtil";
 
-Vue.config.productionTip = false;
-Vue.use(ElementUI);
+
 
 // router.beforeEach((to, from, next) => {
 //     const { path } = to;
