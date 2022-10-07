@@ -8,7 +8,7 @@
       :show-all-levels="false"
       @change="handleChange"
     />
-    <div class="icon"><i class="el-icon-refresh"></i></div>
+    <div class="icon" @click="loadData"><i class="el-icon-refresh"></i></div>
   </div>
 </template>
 <script>
@@ -78,6 +78,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 0 10px;
+      cursor: pointer;
     }
     :deep(.el-input__inner) {
       border-radius: 0px;
