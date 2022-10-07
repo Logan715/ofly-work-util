@@ -16,14 +16,44 @@
     "sourceMap": true,
     "typeRoots": ["/@types", "./node_modules/@types"],
     "baseUrl": ".",
-    "types": ["webpack-env", "node"],
+    "types": ["webpack-env"],
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
-    "src/**/*.js",
+    "src/**/*",
   ],
   "exclude": ["node_modules", "dist"]
 }
+
+// {
+//   "compilerOptions": {
+//     "outDir": "./",
+//     "target": "esnext",
+//     "module": "esnext",
+//     "strict": false,
+//     "jsx": "preserve",
+//     "importHelpers": true,
+//     "moduleResolution": "node",
+//     "noImplicitAny": false,
+//     "experimentalDecorators": true,
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "esModuleInterop": true,
+//     "allowSyntheticDefaultImports": true,
+//     "sourceMap": true,
+//     "typeRoots": ["/@types", "./node_modules/@types"],
+//     "baseUrl": ".",
+//     "types": ["webpack-env", "node"],
+//     "paths": {
+//       "@/*": ["src/*"]
+//     },
+//     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+//   },
+//   "include": [
+//     "src/**/*.js",
+//   ],
+//   "exclude": ["node_modules", "dist"]
+// }

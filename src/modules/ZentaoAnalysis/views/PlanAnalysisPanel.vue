@@ -1,16 +1,23 @@
 <template>
   <div v-loading="loading">
     <div class="condition">
-      <div class="label">计划编号：</div> <el-input class="input" placeholder="计划编号" v-model="planId" @blur="handlePlanChange"></el-input>
-      <el-button type="primary" class="analysis-btn" @click="handleAnalysis" :disabled="!planId">分析</el-button>
+      <div class="label">计划编号：</div> 
+      <!-- <el-input v-model="planId" class="input" placeholder="计划编号" @blur="handlePlanChange" /> -->
+      <PlanCascader v-model="planId" @change="handlePlanChange" />
+      <el-button type="primary" class="analysis-btn" :disabled="!planId" @click="handleAnalysis">分析</el-button>
     </div>
     <div style="margin-bottom: 12px;margin-top:12px;">
       已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
     </div>
-    <el-button type="primary" style="margin-bottom: 12px;" @click="getAnalysisPlanResult" :disabled="!canGetExport">获取分析报告</el-button>
+    <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canGetExport" @click="getAnalysisPlanResult">获取分析报告</el-button>
     <div>
-      <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
-      <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList"></plan-analysis-card>
+      <div class="title mb">
+        {{ plan.label }}
+      </div>
+      <div class="general">
+        <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
+        <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
+      </div>
     </div>
     <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" />
     <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
@@ -26,11 +33,12 @@ import {
 import PlanAnalysisCard from './PlanAnalysisCard.vue'
 import PlanAnalysisCompareList from './PlanAnalysisCompareList.vue'
 import WebSockeUtil from '@/utils/WebSockeUtil'
-
+import PlanCascader from '../views/PlanManager/PlanCascader.vue'
 export default {
   components: {
     PlanAnalysisCard,
-    PlanAnalysisCompareList
+    PlanAnalysisCompareList,
+    PlanCascader
   },
   props: {
     user: {
@@ -41,6 +49,7 @@ export default {
   data() {
     return {
       loading: false,
+      plan: {},
       planId: undefined,
       result: {},
       analysisDateList: [],
@@ -143,11 +152,13 @@ export default {
     handleAnalysis() {
       this.analysis()
     },
-    handlePlanChange(val) {
-      if(val) {
+    handlePlanChange(planId, plan) {
+      this.plan = plan
+      if(planId) {
         this.getAnalysisDateList()
       } else {
         this.analysisDateList = []
+        this.plan = {}
       }
     },
     handleSelectDate(date) {
@@ -210,6 +221,15 @@ export default {
   .input {
     width: 200px
   }
+}
+.general, .title {
+  display: flex;
+  justify-content: center;
+}
+.title {
+  font-size: 30px;
+  flex: 1;
+  font-weight: 900;
 }
 .tag {
   cursor: pointer;
