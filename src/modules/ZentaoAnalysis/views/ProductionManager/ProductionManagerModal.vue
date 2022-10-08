@@ -7,14 +7,31 @@
   >
     <div class="production-table">
       <el-table 
-        :data="list" 
+        :data="productionList" 
         border 
         stripe 
         header-row-class-name="ofly-table-head"
         height="100%"
       >
         <el-table-column prop="id" label="产品编号" :width="80" align="center" />
-        <el-table-column prop="name" label="产品名称" show-overflow-tooltip />
+        <el-table-column prop="name" show-overflow-tooltip>
+          <template #header>
+            <span>产品名称</span>
+            <el-popover
+              v-if="list.length"
+              placement="right"
+              width="300"
+              trigger="hover"
+              @show="handleShow"
+            >
+              <template>
+                <el-input ref="filterInput" v-model="searchStr" clearable />
+              </template>
+              <i slot="reference" style="padding-left:4px" class="el-icon-location"></i>
+            </el-popover>
+            
+          </template>
+        </el-table-column>
         <el-table-column prop="focus" label="是否被关注" :width="100" align="center">
           <template #default="{ row }">
             <i v-if="row.focus" class="el-icon-check" style="font-size: 18px;color: green;font-weight: bold;"></i>
@@ -52,7 +69,16 @@ export default {
   },
   data () {
     return {
+      searchStr: undefined,
       list: [],
+    }
+  },
+  computed: {
+    productionList() {
+      if(this.searchStr) {
+        return this.list.filter(row=> row.name.includes(this.searchStr))
+      }
+      return this.list;
     }
   },
   watch: {
@@ -100,6 +126,7 @@ export default {
     async loadData() {
       const loading = this.$loading()
       try {
+        this.searchStr = undefined;
         const { records } = await getProductionList();
         this.list = records
       } catch(e) {
@@ -118,6 +145,9 @@ export default {
       }
       loading.close()
     },
+    handleShow() {
+      setTimeout(this.$refs.filterInput?.focus, 100);
+    },
     close() {
       this.$emit('update:visible', false)
     }
@@ -126,7 +156,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .production-table {
-  height: calc(85vh - 200px);
+  height: calc(85vh - 234px);
   overflow-y: auto;
 }
 </style>
