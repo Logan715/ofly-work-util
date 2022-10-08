@@ -90,12 +90,12 @@ export default {
       if(body.type === "success") {
         this.$notify({
           title: '成功',
-          message: '已获取最新产品列表',
+          message: '已获取最新计划列表',
           duration: 0,
           type: 'success',
           position: 'bottom-right'
         })
-        setTimeout(this.loadData, 500)
+        setTimeout(this.loadData, 50)
       } else {
         this.$notify.error({
           title: '失败',
