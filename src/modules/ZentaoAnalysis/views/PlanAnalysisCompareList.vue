@@ -44,10 +44,10 @@ export default {
   },
   methods: {
     openBug(row) {
-      window.open(`http://zentao.newboss.com/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId}`)
+      window.open(`http://120.39.223.102:12005/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId}`)
     },
     openStory(row) {
-      window.open(`http://zentao.newboss.com/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}`)
+      window.open(`http://120.39.223.102:12005/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}`)
     },
     handleSelectionChange(rows) {
       this.$emit('update:selectedRows', rows)
