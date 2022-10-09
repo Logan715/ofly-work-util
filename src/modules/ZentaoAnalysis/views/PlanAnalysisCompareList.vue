@@ -1,5 +1,6 @@
 <template>
-  <el-table :data="data" border stripe header-row-class-name="ofly-table-head">
+  <el-table :data="data" border stripe header-row-class-name="ofly-table-head" @selection-change="handleSelectionChange">
+    <el-table-column type="selection" width="50" align="center" />
     <el-table-column type="index" width="50" align="center" />
     <el-table-column v-if="isBug" prop="bugId" label="bugID" width="80" align="center">
       <template #default="{ row }">
@@ -20,6 +21,7 @@
   </el-table>
 </template>
 <script>
+
 export default {
   props: {
     type: {
@@ -27,6 +29,10 @@ export default {
       default: '',
     },
     data: {
+      type: Array,
+      default() {return []}
+    },
+    selectedRows: {
       type: Array,
       default() {return []}
     }
@@ -43,6 +49,9 @@ export default {
     openStory(row) {
       window.open(`http://zentao.newboss.com/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}`)
     },
+    handleSelectionChange(rows) {
+      this.$emit('update:selectedRows', rows)
+    }
   }
 }
 </script>

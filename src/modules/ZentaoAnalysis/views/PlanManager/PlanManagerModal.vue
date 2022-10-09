@@ -65,7 +65,7 @@
       </el-table>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="reloadPlan()">刷新产品</el-button>
+      <el-button type="primary" @click="reloadPlan()">刷新计划</el-button>
     </span>
   </el-dialog>
 </template>

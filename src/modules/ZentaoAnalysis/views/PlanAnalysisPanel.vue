@@ -10,6 +10,7 @@
       已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
     </div>
     <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canGetExport" @click="getAnalysisPlanResult">获取分析报告</el-button>
+    <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canCopyLink" @click="handleCopyLink">复制链接</el-button>
     <div>
       <div class="title mb">
         {{ plan.label }}
@@ -19,7 +20,7 @@
         <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
       </div>
     </div>
-    <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" />
+    <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
     <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>
 </template>
@@ -34,6 +35,8 @@ import PlanAnalysisCard from './PlanAnalysisCard.vue'
 import PlanAnalysisCompareList from './PlanAnalysisCompareList.vue'
 import WebSockeUtil from '@/utils/WebSockeUtil'
 import PlanCascader from '../views/PlanManager/PlanCascader.vue'
+import copy from 'clipboard-copy'
+
 export default {
   components: {
     PlanAnalysisCard,
@@ -57,6 +60,7 @@ export default {
       selectDates: [],
       compareList: [],
       type: undefined,
+      selectedRows: [],
     }
   },
   computed: {
@@ -67,6 +71,9 @@ export default {
     },
     canGetExport() {
       return this.selectDates?.length > 0
+    },
+    canCopyLink() {
+      return this.selectedRows?.length > 0
     },
     resultInfo() {
       let _resultInfo = "";
@@ -203,6 +210,18 @@ export default {
         this.compareList = data
       } catch(e) {console.error(e);}
       this.loading = false;
+    },
+    async handleCopyLink() {
+      const copyContent = this.selectedRows.map(row=> {
+        if(this.type ==="bug") {
+          return `http://120.39.223.102:12005/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId}`
+        } else {
+          return `http://120.39.223.102:12005/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}`
+        }
+      }).join('\n');
+
+      await copy(copyContent);
+      this.$message.success('复制完成')
     }
     
   }
