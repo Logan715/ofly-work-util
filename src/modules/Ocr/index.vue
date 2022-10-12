@@ -1,25 +1,25 @@
 <template>
-<el-row :gutter="24" v-loading="loading" class="ocr">
-  <el-col :span="11" class="ocr-col ocr-col-select">
-    <el-upload
-      class="avatar-uploader ocr-upload"
-      action="#"
-      drag
-      :auto-upload="false"
-      :show-file-list="false"
-      :on-change="onFileChange"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" width="100%" height="100%">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
-  </el-col>
-  <el-col :span="2" class="ocr-col ocr-col-analyse">
-    <el-button type="primary" @click="analyse" :disabled="!canAnalyse">识别</el-button>
-  </el-col>
-  <el-col :span="11" class="ocr-col">
-    <el-input type="textarea" class="ocr-result" :value="words"></el-input>
-  </el-col>
-</el-row>
+  <el-row v-loading="loading" :gutter="24" class="ocr">
+    <el-col :span="11" class="ocr-col ocr-col-select">
+      <el-upload
+        class="avatar-uploader ocr-upload"
+        action="#"
+        drag
+        :auto-upload="false"
+        :show-file-list="false"
+        :on-change="onFileChange"
+      >
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" width="100%" height="100%" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-col>
+    <el-col :span="2" class="ocr-col ocr-col-analyse">
+      <el-button type="primary" :disabled="!canAnalyse" @click="analyse">识别</el-button>
+    </el-col>
+    <el-col :span="11" class="ocr-col">
+      <el-input type="textarea" class="ocr-result" :value="words" />
+    </el-col>
+  </el-row>
 </template>
 <script>
 import RequestUtil from '@/utils/RequestUtil'

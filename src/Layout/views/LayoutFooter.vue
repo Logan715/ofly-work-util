@@ -1,5 +1,5 @@
 <template>
-    <div class="footer">logan715©️ofly.com</div>
+  <div class="footer">logan715©️ofly.com</div>
 </template>
 
 <style scoped>

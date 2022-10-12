@@ -1,20 +1,20 @@
 <template>
-    <div class="header">
-        <div class="header-logo">
-            <layout-menu-toggle
-                :expanded="expanded"
-                @onToggle="onToggle"
-            ></layout-menu-toggle>
-            <i class="el-icon-ofly-mouse iconfont logo"></i>
-            <span>OFLY MOUSE</span>
-        </div>
-        <div class="header-logo-extras">
-            <!-- <i
+  <div class="header">
+    <div class="header-logo">
+      <layout-menu-toggle
+        :expanded="expanded"
+        @onToggle="onToggle"
+      />
+      <i class="el-icon-ofly-mouse iconfont logo"></i>
+      <span>OFLY MOUSE</span>
+    </div>
+    <div class="header-logo-extras">
+      <!-- <i
                 class="el-icon-ofly-exit iconfont exit"
                 @click="$emit('onExit')"
             ></i> -->
-        </div>
     </div>
+  </div>
 </template>
 
 <script>

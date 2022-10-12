@@ -1,7 +1,7 @@
 <template>
-    <div class="toggle" @click="toggle">
-        <i :class="iconClass"></i>
-    </div>
+  <div class="toggle" @click="toggle">
+    <i :class="iconClass"></i>
+  </div>
 </template>
 <script>
 export default {

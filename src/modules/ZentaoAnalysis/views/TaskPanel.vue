@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
-    <el-button type="primary" @click="handleTask" style="margin-bottom: 20px">获取完成的任务</el-button>
-    <el-input type="textarea" :value="finishTaskTitles" :autosize="{maxRows: 10, minRows: 10}"></el-input>
+    <el-button type="primary" style="margin-bottom: 20px" @click="handleTask">获取完成的任务</el-button>
+    <el-input type="textarea" :value="finishTaskTitles" :autosize="{maxRows: 10, minRows: 10}" />
   </div>
 </template>
 <script>

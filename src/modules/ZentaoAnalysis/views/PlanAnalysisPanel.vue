@@ -7,21 +7,32 @@
       <el-button type="primary" class="analysis-btn" :disabled="!planId" @click="handleAnalysis">分析</el-button>
     </div>
     <div style="margin-bottom: 12px;margin-top:12px;">
-      已分析计划时间：<el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag>
+      已分析计划时间：
+      <!-- <el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag> -->
+      <el-date-picker
+        v-model="selectDates"
+        type="daterange"
+        range-separator="~"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :picker-options="pickerOptions"
+      />
     </div>
     <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canGetExport" @click="getAnalysisPlanResult">获取分析报告</el-button>
     <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canCopyLink" @click="handleCopyLink">复制链接</el-button>
-    <div>
-      <div class="title mb">
-        {{ plan.label }}
+    <el-button type="primary" style="margin-bottom: 12px;" @click="handleScreenshots">截图</el-button>
+    <div ref="content">
+      <div>
+        <div class="title mb">
+          {{ plan.label }}
+        </div>
+        <div class="general">
+          <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
+          <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
+        </div>
       </div>
-      <div class="general">
-        <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
-        <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
-      </div>
+      <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
     </div>
-    <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
-    <!-- <el-input type="textarea" :value="resultInfo" :autosize="{maxRows: 10, minRows: 10}"></el-input> -->
   </div>
 </template>
 <script>
@@ -36,6 +47,9 @@ import PlanAnalysisCompareList from './PlanAnalysisCompareList.vue'
 import WebSockeUtil from '@/utils/WebSockeUtil'
 import PlanCascader from '../views/PlanManager/PlanCascader.vue'
 import copy from 'clipboard-copy'
+import html2canvas from 'html2canvas'
+import moment from 'moment'
+import * as clipboard from "clipboard-polyfill";
 
 export default {
   components: {
@@ -56,7 +70,6 @@ export default {
       planId: undefined,
       result: {},
       analysisDateList: [],
-      selectDate: undefined,
       selectDates: [],
       compareList: [],
       type: undefined,
@@ -64,6 +77,13 @@ export default {
     }
   },
   computed: {
+    pickerOptions() {
+      return {
+        disabledDate:(date) => {
+          return !this.analysisDateList.includes(moment(date).format('YYYY-MM-DD'))
+        }
+      }
+    },
     condition() {
       return {
         planId: this.planId
@@ -92,8 +112,12 @@ export default {
   watch: {
     analysisDateList(val) {
       if(val?.length) {
-        this.selectDates = [val[0]]
-        this.getAnalysisPlanResult();
+        if(val.length > 1) {
+          this.selectDates = [val[0], val[1]]
+        } else {
+          this.selectDates = [val[0], val[0]]
+        }
+        this.$nextTick(this.getAnalysisPlanResult)
       }
     }
   },
@@ -222,6 +246,36 @@ export default {
 
       await copy(copyContent);
       this.$message.success('复制完成')
+    },
+
+    async handleScreenshots() {
+      // eslint-disable-next-line no-unused-vars
+      // clipboard.writeText('xxxx')
+      // this.$message.success('复制完成')
+
+      const that = this
+      // const canvas = await html2canvas(document.body, { useCORS: true })
+      const canvas = await html2canvas(this.$refs.content, { useCORS: true })
+      
+      canvas.toBlob(async (blob, )=> {
+          const item = new clipboard.ClipboardItem({ "image/png": blob});
+          await clipboard.write([item]);
+          that.$message.success('复制完成')
+        }
+        )
+
+      // .then(function(canvas) {
+      //   canvas.toBlob((blob)=> {
+      //     const item = new clipboard.ClipboardItem({ "image/png": blob });
+      //     await clipboard.write([item]);
+      //     that.$message.success('复制完成')
+
+      //   })
+        // const dataUrl = canvas.toDataURL()
+        // var newImg = document.createElement("img")
+        // debugger
+        // document.body.appendChild(canvas);
+    // });
     }
     
   }
@@ -260,4 +314,5 @@ export default {
 .mb {
   margin-bottom: 20px;
 }
+
 </style>

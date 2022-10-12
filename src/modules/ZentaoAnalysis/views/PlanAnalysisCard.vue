@@ -3,50 +3,50 @@
     <div class="title">
       {{ title }}({{ story.count }})
     
-    <span class="notice" v-if="story.count-story.finishedCount" @click="handleCompare('unFinished')">-剩余{{ story.count-story.finishedCount }}</span>
+      <span v-if="story.count-story.finishedCount" class="notice" @click="handleCompare('unFinished')">-剩余{{ story.count-story.finishedCount }}</span>
     </div>
     <div class="content">
       <div class="block">
         <div class="date ">{{ story.analysisDate }}</div>
         <div class="data">
-            <div class="count count-left">
-              <div class="sub-title">紧急</div>
-              <div class="divider" :class="{'notice': story.urgentCount !== story.urgentFinishedCount}">{{ story.urgentFinishedCount }}</div>
-              <div>{{ story.urgentCount }}</div>
-            </div>
-            <div class="count count-right">
-              <div class="sub-title">所有</div>
-              <div class="divider" :class="{'notice': story.count !== story.finishedCount}">{{ story.finishedCount }}</div>
-              <div>{{ story.count }}</div>
-            </div>
+          <div class="count count-left">
+            <div class="sub-title">紧急</div>
+            <div class="divider" :class="{'notice': story.urgentCount !== story.urgentFinishedCount}">{{ story.urgentFinishedCount }}</div>
+            <div>{{ story.urgentCount }}</div>
+          </div>
+          <div class="count count-right">
+            <div class="sub-title">所有</div>
+            <div class="divider" :class="{'notice': story.count !== story.finishedCount}">{{ story.finishedCount }}</div>
+            <div>{{ story.count }}</div>
+          </div>
         </div>
       </div>
       <div v-if="comparable" class="block">
         <div class="date ">{{ compareStory.analysisDate }}</div>
         <div class="data">
-            <div class="count count-left">
-              <div class="sub-title">紧急</div>
-              <div class="divider">{{ compareStory.urgentFinishedCount }}</div>
-              <div>{{ compareStory.urgentCount }}</div>
-            </div>
-            <div class="count count-right">
-              <div class="sub-title">所有</div>
-              <div class="divider">{{ compareStory.finishedCount }}</div>
-              <div>{{ compareStory.count }}</div>
-            </div>
+          <div class="count count-left">
+            <div class="sub-title">紧急</div>
+            <div class="divider">{{ compareStory.urgentFinishedCount }}</div>
+            <div>{{ compareStory.urgentCount }}</div>
+          </div>
+          <div class="count count-right">
+            <div class="sub-title">所有</div>
+            <div class="divider">{{ compareStory.finishedCount }}</div>
+            <div>{{ compareStory.count }}</div>
+          </div>
         </div>
       </div>
       <div v-if="comparable" class="block">
         <div class="date">对比</div>
         <div class="data">
-            <div class="count count-left">
-              <div class="sub-title">紧急新增</div>
-              <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}" @click="handleCompare('urgentAdd')">{{ story.urgentCount -compareStory.urgentCount }}</div>
-            </div>
-            <div class="count count-right">
-              <div class="sub-title">所有新增</div>
-              <div class="compare-data" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
-            </div>
+          <div class="count count-left">
+            <div class="sub-title">紧急新增</div>
+            <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}" @click="handleCompare('urgentAdd')">{{ story.urgentCount -compareStory.urgentCount }}</div>
+          </div>
+          <div class="count count-right">
+            <div class="sub-title">所有新增</div>
+            <div class="compare-data" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,29 +1,29 @@
 <template>
   <div>
     <template>
-  <div class="container">
-    <ace-editor
-      ref="aceEditor"
-      v-model="content"
-      @init="editorInit"
-      width="700"
-      height="600"
-      lang="javascript"
-      :theme="theme"
-      :options="{
-         enableBasicAutocompletion: true,
-         enableSnippets: true,
-         enableLiveAutocompletion: true,
-         tabSize:6,
-         fontSize:14,
-         showPrintMargin:false, //去除编辑器里的竖线
-      }"
-    ></ace-editor>
-    <el-button type="primary" size="small" @click="getValue">获 取</el-button>
-    <el-button type="primary" size="small" @click="pre">上一个主题</el-button>
-    <el-button type="primary" size="small" @click="next">下一个主题</el-button>
-  </div>
-</template>
+      <div class="container">
+        <ace-editor
+          ref="aceEditor"
+          v-model="content"
+          width="700"
+          height="600"
+          lang="javascript"
+          :theme="theme"
+          :options="{
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true,
+            tabSize:6,
+            fontSize:14,
+            showPrintMargin:false, //去除编辑器里的竖线
+          }"
+          @init="editorInit"
+        />
+        <el-button type="primary" size="small" @click="getValue">获 取</el-button>
+        <el-button type="primary" size="small" @click="pre">上一个主题</el-button>
+        <el-button type="primary" size="small" @click="next">下一个主题</el-button>
+      </div>
+    </template>
   </div>
 </template>
 <script>

@@ -1,10 +1,10 @@
 <template>
-    <layout-aside-menu
-        :menus="menus"
-        :expanded="expanded"
-        :menu-active-key="menuActiveKey"
-        @select="select"
-    ></layout-aside-menu>
+  <layout-aside-menu
+    :menus="menus"
+    :expanded="expanded"
+    :menu-active-key="menuActiveKey"
+    @select="select"
+  />
 </template>
 <script>
 import LayoutAsideMenu from "./LayoutAsideMenu";

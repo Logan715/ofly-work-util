@@ -2,28 +2,26 @@
   <el-row :gutter="24">
     <el-col :span="24" class="mb">
       <el-input
+        v-model="source"
         type="textarea"
         :rows="5"
-        v-model="source"
-      >
-      </el-input>
+      />
     </el-col>
     <el-col :span="24" class="mb">
       <el-button-group>
-        <el-button type="primary" @click="encode" :disabled="!canCover">加密</el-button>
-        <el-button type="primary" @click="decode" :disabled="!canCover">解密</el-button>
+        <el-button type="primary" :disabled="!canCover" @click="encode">加密</el-button>
+        <el-button type="primary" :disabled="!canCover" @click="decode">解密</el-button>
       </el-button-group>
     </el-col>
     <el-col :span="24">
       <el-input
+        v-model="target"
         type="textarea"
         class="target"
         :rows="5"
-        v-model="target"
         readonly
         @click.native="copy"
-      >
-      </el-input>
+      />
     </el-col>
   </el-row>
 </template>

@@ -52,8 +52,8 @@ export const getAnalysisDateList = (planId) => {
 
 export const getAnalysisPlanResult = (planId, dates) => {
   
-  const _dates = lodash.sortBy(Array.from(new Set(dates))).reverse()
-  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates: _dates});
+  // const _dates = lodash.sortBy(Array.from(new Set(dates))).reverse()
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates});
 }
 
 export const getCompareList = ({

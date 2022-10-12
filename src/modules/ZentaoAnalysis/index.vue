@@ -8,6 +8,7 @@
       <div>
         <ProductionManagerButton :user="user" />
         <PlanManagerButton :user="user" />
+        
       </div>
     </div>
     <el-tabs tab-position="left" style="margin-top: 10px;padding-top: 10px;border-top: 1px solid rgb(220, 223, 230)">
@@ -37,6 +38,9 @@ export default {
       }
     }
   },
+  methods: {
+    
+  }
 }
 </script>
 <style lang="less" scoped>

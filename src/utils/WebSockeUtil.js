@@ -19,14 +19,14 @@ class WebSocketUtil {
     stompClient.heartbeat.incoming = 0;//客户端不从服务端接收心跳包
     stompClient.connect(
       {},
-      frame => {
+      () => {
         console.log('连接成功')
         //  stompClient.subscribe('/zentao/analysis', function (response) {
         //       debugger
         //   })
         this.isConnect = true;
       },
-      error => {
+      () => {
         this.isConnect = false;
         console.error(`连接失败， 重新尝试: ${this.url}`)
         setTimeout(()=>{

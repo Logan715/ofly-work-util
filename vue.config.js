@@ -38,7 +38,7 @@ module.exports = {
         https: false,
         open: false, //配置自动启动浏览器
         overlay: {
-            warnings: true,
+            warnings: false,
             errors: true
         }, // 错误、警告在页面弹出
         // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理

@@ -1,33 +1,33 @@
 <template>
-    <el-container>
-        <el-header class="header" height="64px">
-            <layout-header
-                :expanded.sync="expanded"
-            ></layout-header>
-        </el-header>
-        <el-container class="main">
-            <el-aside width="10" class="aside">
-                <layout-aside
-                    :expanded="expanded"
-                    :menus="menus"
-                    :menu-active-key="menuActiveKey"
-                    @select="select"
-                ></layout-aside>
-            </el-aside>
-            <el-main class="content">
-                <el-container>
-                    <layout-content
-                        :tabs="tabs"
-                        v-model="menuActiveKey"
-                        @tab-remove="tabRemove"
-                    ></layout-content>
-                </el-container>
-                <el-footer class="footer" height="32px">
-                    <layout-footer></layout-footer>
-                </el-footer>
-            </el-main>
+  <el-container>
+    <el-header class="header" height="64px">
+      <layout-header
+        :expanded.sync="expanded"
+      />
+    </el-header>
+    <el-container class="main">
+      <el-aside width="10" class="aside">
+        <layout-aside
+          :expanded="expanded"
+          :menus="menus"
+          :menu-active-key="menuActiveKey"
+          @select="select"
+        />
+      </el-aside>
+      <el-main class="content">
+        <el-container>
+          <layout-content
+            v-model="menuActiveKey"
+            :tabs="tabs"
+            @tab-remove="tabRemove"
+          />
         </el-container>
+        <el-footer class="footer" height="32px">
+          <layout-footer />
+        </el-footer>
+      </el-main>
     </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ import LayoutHeader from "./views/LayoutHeader.vue";
 import LayoutAside from "./views/LayoutAside.vue";
 import LayoutContent from "./views/LayoutContent.vue";
 import LayoutFooter from "./views/LayoutFooter.vue";
-import AuthUtil from "../utils/AuthUtil";
+// import AuthUtil from "../utils/AuthUtil";
 import { findMenu } from "./layout";
 import modulesX from "../modules/index";
 import menu  from "@/menu.json"
@@ -105,9 +105,9 @@ export default {
         }
     },
     beforeRouteUpdate(to, from, next) {
-        const { menus } = AuthUtil.getSessionUser();
-        const menuActiveKey = findActiveMenuKey(menus, to.path);
-        this.$data.menuActiveKey = menuActiveKey;
+        // const { menus } = AuthUtil.getSessionUser();
+        // const menuActiveKey = findActiveMenuKey(menus, to.path);
+        // this.$data.menuActiveKey = menuActiveKey;
         next();
     }
 };

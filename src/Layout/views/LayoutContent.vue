@@ -1,27 +1,27 @@
 <template>
-    <div class="content-main">
-        <template v-if="showTab">
-            <el-tabs
-                :value="activeName"
-                type="border-card"
-                @tab-click="handleClick"
-                @tab-remove="handleRemove"
-            >
-                <el-tab-pane
-                    v-for="tab in tabs"
-                    closable
-                    :key="tab.id"
-                    :label="tab.name"
-                    :name="tab.id"
-                >
-                    <component :is="tab.component"></component>
-                </el-tab-pane>
-            </el-tabs>
-        </template>
-        <div v-else class="content-welcome">
-            欢迎使用<span class="content-welcome-primary">Ofly</span>平台
-        </div>
+  <div class="content-main">
+    <template v-if="showTab">
+      <el-tabs
+        :value="activeName"
+        type="border-card"
+        @tab-click="handleClick"
+        @tab-remove="handleRemove"
+      >
+        <el-tab-pane
+          v-for="tab in tabs"
+          :key="tab.id"
+          closable
+          :label="tab.name"
+          :name="tab.id"
+        >
+          <component :is="tab.component" />
+        </el-tab-pane>
+      </el-tabs>
+    </template>
+    <div v-else class="content-welcome">
+      欢迎使用<span class="content-welcome-primary">Ofly</span>平台
     </div>
+  </div>
 </template>
 <script>
 export default {
@@ -47,7 +47,7 @@ export default {
         }
     },
     methods: {
-        handleClick(tab, event) {
+        handleClick(tab,) {
             this.$emit("onActiveNameChange", tab.name);
         },
         handleRemove(tabName) {
