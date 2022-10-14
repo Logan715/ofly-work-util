@@ -1,7 +1,8 @@
 <template>
   <div class="card">
     <div class="title">
-      {{ title }}({{ story.count }})
+      {{ title }}
+      (<span class="link" @click="handleCompare('all')">{{ story.count }}</span>)
     
       <span v-if="story.count-story.finishedCount" class="notice" @click="handleCompare('unFinished')">-剩余{{ story.count-story.finishedCount }}</span>
     </div>
@@ -41,11 +42,11 @@
         <div class="data">
           <div class="count count-left">
             <div class="sub-title">紧急新增</div>
-            <div class="compare-data" :class="{'notice': story.urgentCount !== compareStory.urgentCount}" @click="handleCompare('urgentAdd')">{{ story.urgentCount -compareStory.urgentCount }}</div>
+            <div class="compare-data link" :class="{'notice': story.urgentCount !== compareStory.urgentCount}" @click="handleCompare('urgentAdd')">{{ story.urgentCount -compareStory.urgentCount }}</div>
           </div>
           <div class="count count-right">
             <div class="sub-title">所有新增</div>
-            <div class="compare-data" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
+            <div class="compare-data link" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
           </div>
         </div>
       </div>
@@ -157,6 +158,10 @@ export default {
   .notice {
     color: red;
     cursor: pointer;
+  }
+  .link {
+    cursor: pointer;
+
   }
   .compare-data {
     flex: 1;
