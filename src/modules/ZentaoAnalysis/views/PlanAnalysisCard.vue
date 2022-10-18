@@ -4,7 +4,10 @@
       {{ title }}
       (<span class="link" @click="handleCompare('all')">{{ story.count }}</span>)
     
-      <span v-if="story.count-story.finishedCount" class="notice" @click="handleCompare('unFinished')">-剩余{{ story.count-story.finishedCount }}</span>
+      <span v-if="story.count-story.finishedCount" class="notice" @click="handleCompare('unFinished')">
+        -剩余{{ story.count-story.finishedCount }}
+        <span class="rate">{{ rate }}</span>
+      </span>
     </div>
     <div class="content">
       <div class="block">
@@ -54,6 +57,7 @@
   </div>
 </template>
 <script>
+import numeral from 'numeral'
 export default {
   props: {
     type: {
@@ -70,6 +74,12 @@ export default {
     }
   },
   computed: {
+    rate() {
+      const { finishedCount, count } = this.story
+      const rate = numeral(finishedCount*100/count).format("0,0.[00]");
+      return `${rate}%`
+      
+    },
     comparable() {
       return this.data?.length >= 2
     },
@@ -169,6 +179,11 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 32px;
+  }
+  .rate {
+    font-size: 12px;
+    font-weight: bold;
+    color: #b57da5;
   }
   
 }
