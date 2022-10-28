@@ -21,8 +21,9 @@
     <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canGetExport" @click="getAnalysisPlanResult">获取分析报告</el-button>
     <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canCopyLink" @click="handleCopyLink">复制链接</el-button>
     <el-button type="primary" style="margin-bottom: 12px;" @click="handleScreenshots">截图</el-button>
-    <div ref="content">
-      <div>
+    <el-button type="primary" style="margin-bottom: 12px;" @click="handleGeneralScreenshots">截图(general)</el-button>
+    <div ref="content" class="content">
+      <div ref="contentGeneral" class="general">
         <div class="title mb">
           {{ plan.label }}
         </div>
@@ -249,34 +250,26 @@ export default {
     },
 
     async handleScreenshots() {
-      // eslint-disable-next-line no-unused-vars
-      // clipboard.writeText('xxxx')
-      // this.$message.success('复制完成')
-
       const that = this
-      // const canvas = await html2canvas(document.body, { useCORS: true })
       const canvas = await html2canvas(this.$refs.content, { useCORS: true })
       
       canvas.toBlob(async (blob, )=> {
-          const item = new clipboard.ClipboardItem({ "image/png": blob});
-          await clipboard.write([item]);
-          that.$message.success('复制完成')
-        }
-        )
-
-      // .then(function(canvas) {
-      //   canvas.toBlob((blob)=> {
-      //     const item = new clipboard.ClipboardItem({ "image/png": blob });
-      //     await clipboard.write([item]);
-      //     that.$message.success('复制完成')
-
-      //   })
-        // const dataUrl = canvas.toDataURL()
-        // var newImg = document.createElement("img")
-        // debugger
-        // document.body.appendChild(canvas);
-    // });
+        const item = new clipboard.ClipboardItem({ "image/png": blob});
+        await clipboard.write([item]);
+        that.$message.success('复制完成')
+      })
+    },
+    async handleGeneralScreenshots() {
+      const that = this
+      const canvas = await html2canvas(this.$refs.contentGeneral, { useCORS: true })
+      
+      canvas.toBlob(async (blob, )=> {
+        const item = new clipboard.ClipboardItem({ "image/png": blob});
+        await clipboard.write([item]);
+        that.$message.success('复制完成')
+      })
     }
+    
     
   }
 }
@@ -314,5 +307,13 @@ export default {
 .mb {
   margin-bottom: 20px;
 }
-
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+    align-items: center;
+}
+.general {
+  display: inline-block;
+}
 </style>
