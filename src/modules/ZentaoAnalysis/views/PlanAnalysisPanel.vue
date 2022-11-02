@@ -9,6 +9,7 @@
     <div style="margin-bottom: 12px;margin-top:12px;">
       已分析计划时间：
       <!-- <el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag> -->
+      {{ selectDates }}
       <el-date-picker
         v-model="selectDates"
         type="daterange"
