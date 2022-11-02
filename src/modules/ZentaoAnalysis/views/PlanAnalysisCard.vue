@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div v-if="comparable" class="block">
+      <div v-if="comparable" class="block block-compare">
         <div class="date">对比</div>
         <div class="data">
           <div class="count count-left">
@@ -50,6 +50,10 @@
           <div class="count count-right">
             <div class="sub-title">所有新增</div>
             <div class="compare-data link" :class="{'notice': story.count !== compareStory.count}" @click="handleCompare('add')">{{ story.count - compareStory.count }}</div>
+          </div>
+          <div class="count count-left">
+            <div class="sub-title">完成数</div>
+            <div class="compare-data link" :class="{'notice': story.finishedCount !== compareStory.finishedCount}" @click="handleCompare('compareFinished')">{{ story.finishedCount - compareStory.finishedCount }}</div>
           </div>
         </div>
       </div>
@@ -125,6 +129,10 @@ export default {
     flex-direction: column;
     border-left: 1px solid #d9d9d9;
     width: 100%;
+    width: 140px
+  }
+  .block-compare {
+    width: 200px
   }
   .date {
      font-size: 20px;

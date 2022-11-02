@@ -1,5 +1,4 @@
 import RequestUtil from '@/utils/RequestUtil'
-import lodash from 'lodash'
 
 export const reloadProductionList = ({userName, password}) => {
   return RequestUtil.post("/oflywork/zentao/production/reloadAllProduction", {userName, password});
@@ -51,9 +50,8 @@ export const getAnalysisDateList = (planId) => {
 }
 
 export const getAnalysisPlanResult = (planId, dates) => {
-  
-  // const _dates = lodash.sortBy(Array.from(new Set(dates))).reverse()
-  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates});
+  const _dates = dates.reverse()
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates: _dates});
 }
 
 export const getCompareList = ({
@@ -62,7 +60,7 @@ export const getCompareList = ({
   state,
   dates,
 }) => {
-  const _dates = lodash.sortBy(Array.from(new Set(dates)))
+  const _dates = dates.reverse()
   return RequestUtil.post("/oflywork/zentao/analysis/plan/getCompareList", {planId, type, state, dates: _dates});
 }
 

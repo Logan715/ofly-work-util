@@ -13,6 +13,7 @@
         v-model="selectDates"
         type="daterange"
         range-separator="~"
+        value-format="yyyy-MM-dd"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
@@ -114,7 +115,7 @@ export default {
     analysisDateList(val) {
       if(val?.length) {
         if(val.length > 1) {
-          this.selectDates = [val[0], val[1]]
+          this.selectDates = [val[1], val[0]]
         } else {
           this.selectDates = [val[0], val[0]]
         }
