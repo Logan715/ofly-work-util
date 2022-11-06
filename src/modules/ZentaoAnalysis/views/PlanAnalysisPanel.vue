@@ -9,7 +9,6 @@
     <div style="margin-bottom: 12px;margin-top:12px;">
       已分析计划时间：
       <!-- <el-tag v-for="date in analysisDateList" :key="date" :type="selectDates.includes(date) ?'priamry':'info'" class="tag" @click.native="handleSelectDate(date)">{{ date }}</el-tag> -->
-      {{ selectDates }}
       <el-date-picker
         v-model="selectDates"
         type="daterange"
@@ -193,14 +192,6 @@ export default {
       } else {
         this.analysisDateList = []
         this.plan = {}
-      }
-    },
-    handleSelectDate(date) {
-      if(this.selectDates.length < 2) {
-        this.selectDates.push(date)
-      } else {
-        this.selectDates.shift();
-        this.selectDates.push(date);
       }
     },
     toStoryInfo(story) {

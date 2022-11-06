@@ -5,7 +5,7 @@
       (<span class="link" @click="handleCompare('all')">{{ story.count }}</span>)
     
       <span v-if="story.count-story.finishedCount" class="notice" @click="handleCompare('unFinished')">
-        -剩余{{ story.count-story.finishedCount }}
+        -剩余(<span v-if="story.devCount!==null" class="ing">{{ story.devCount }}<span class="notice">/</span></span>{{ story.count-story.finishedCount }})
         <span class="rate">{{ rate }}</span>
       </span>
     </div>
@@ -192,6 +192,9 @@ export default {
     font-size: 12px;
     font-weight: bold;
     color: #b57da5;
+  }
+  .ing {
+    color: #1cc91c
   }
   
 }
