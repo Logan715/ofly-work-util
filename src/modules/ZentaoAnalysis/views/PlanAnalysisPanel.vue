@@ -26,8 +26,13 @@
     <div ref="content" class="content">
       <div ref="contentGeneral" class="general">
         <div class="title mb">
-          {{ plan.label }}
+          <div>{{ plan.label }}</div>
+          <div v-if="bugRate!='0'" class="title bug-rate">
+            <span>Bug率：</span>
+            <span :class="{'notice': warnRate}">{{ bugRate }}%</span>
+          </div>
         </div>
+       
         <div class="general">
           <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
           <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
@@ -52,7 +57,7 @@ import copy from 'clipboard-copy'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 import * as clipboard from "clipboard-polyfill";
-
+import numeral from 'numeral'
 export default {
   components: {
     PlanAnalysisCard,
@@ -79,6 +84,19 @@ export default {
     }
   },
   computed: {
+    warnRate() {
+      const bugRate = Number(this.bugRate || "0");
+      return bugRate > 200
+    },
+    bugRate() {
+      const storyCount = this.result?.story && this.result?.story[0]?.count;
+      const bugCount = (this.result?.bug && this.result?.bug[0].count ) || 0;
+      if(!storyCount) {
+        return `${bugCount * 100}`
+      } else {
+        return numeral(bugCount * 100/ storyCount).format("0.[00]")
+      }
+    },
     pickerOptions() {
       return {
         disabledDate:(date) => {
@@ -283,7 +301,8 @@ export default {
 }
 .general, .title {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .title {
   font-size: 30px;
@@ -298,7 +317,7 @@ export default {
   margin-left: 12px
 }
 .mb {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 .content {
   display: flex;
@@ -309,4 +328,16 @@ export default {
 .general {
   display: inline-block;
 }
+.bug-rate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: gray;
+    flex-direction: row;
+}
+.notice {
+    color: red;
+    cursor: pointer;
+  }
 </style>
