@@ -36,9 +36,9 @@
         <div class="general">
           <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
           <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
+          <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
         </div>
       </div>
-      <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
     </div>
   </div>
 </template>
