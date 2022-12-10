@@ -38,20 +38,21 @@
     <el-button type="primary" style="margin-bottom: 12px;" @click="handleScreenshots">截图</el-button>
     <el-button type="primary" style="margin-bottom: 12px;" @click="handleGeneralScreenshots">截图(general)</el-button>
     <div ref="content" class="content">
-      <div ref="contentGeneral" class="general">
-        <div class="title mb">
-          <div>{{ plan.label }}</div>
-          <div v-if="bugRate!='0'" class="title bug-rate">
-            <span>Bug率：</span>
-            <span :class="{'notice': warnRate}">{{ bugRate }}%</span>
+      <div class="general">
+        <div ref="contentGeneral">
+          <div class="title mb">
+            <div>{{ plan.label }}</div>
+            <div v-if="bugRate!='0'" class="title bug-rate">
+              <span>Bug率：</span>
+              <span :class="{'notice': warnRate}">{{ bugRate }}%</span>
+            </div>
+          </div>
+          <div class="general">
+            <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
+            <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
           </div>
         </div>
-       
-        <div class="general">
-          <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />
-          <plan-analysis-card type="bug" :data="result.bug" title="Bug" @click="handleCompareList" />
-          <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
-        </div>
+        <plan-analysis-compare-list style="margin-top: 12px;" :type="type" :data="compareList" :selected-rows.sync="selectedRows" />
       </div>
     </div>
   </div>
