@@ -41,7 +41,10 @@
       <div class="general">
         <div ref="contentGeneral">
           <div class="title mb">
-            <div>{{ plan.label }}</div>
+            <div>
+              <span v-if="planId" style="color: #1cc91c;margin-right: 4px;">[{{ planId }}]</span>  
+              <span>{{ plan.label }}</span>
+            </div>
             <div v-if="bugRate!='0'" class="title bug-rate">
               <span>Bug率：</span>
               <span :class="{'notice': warnRate}">{{ bugRate }}%</span>
@@ -268,12 +271,12 @@ export default {
           if(copyType==="copyLink") {
             return `http://120.39.223.102:12005/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId}`
           }
-          return `${row.bugTitle}【${row.toUserName}】([bugId=${row.bugId}](http://120.39.223.102:12005/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId}))`
+          return `${row.bugTitle}【${row.toUserName}】([bugId=${row.bugId}](http://120.39.223.102:12005/wwwroot/www/index.php?m=bug&f=view&bugID=${row.bugId} ))`
         } else {
           if(copyType==="copyLink") {
             return `http://120.39.223.102:12005/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}`
           }
-          return `${row.storyTitle}【${row.toUserName || ''}】([storyId=${row.storyId}](http://120.39.223.102:12005/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId}))`
+          return `${row.storyTitle}【${row.toUserName || ''}】([storyId=${row.storyId}](http://120.39.223.102:12005/wwwroot/www/index.php?m=story&f=view&storyID=${row.storyId} ))`
         }
       }).join('\n');
 

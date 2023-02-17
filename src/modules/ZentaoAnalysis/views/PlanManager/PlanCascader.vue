@@ -7,7 +7,13 @@
       :props="{ expandTrigger: 'hover', leaf: true,emitPath: false }"
       :show-all-levels="false"
       @change="handleChange"
-    />
+    >
+      <template #default="{ node, data:item }">
+        <span style="color:#1cc91c;margin-right: 4px;">[{{ item.value }}]</span>
+        <span>{{ item.label }}</span>
+        <span v-if="!node.isLeaf"> ({{ item.children.length }}) </span>
+      </template>
+    </el-cascader>
     <div class="icon" @click="loadData"><i class="el-icon-refresh"></i></div>
   </div>
 </template>
