@@ -42,13 +42,16 @@
         <div ref="contentGeneral">
           <div class="title mb">
             <div>
+              <span>{{ plan.productionName }}</span>
+            </div>
+            <div>
               <span v-if="planId" style="color: #1cc91c;margin-right: 4px;">[{{ planId }}]</span>  
               <span>{{ plan.label }}</span>
             </div>
-            <div v-if="bugRate!='0'" class="title bug-rate">
+            <!-- <div v-if="bugRate!='0'" class="title bug-rate">
               <span>Bug率：</span>
               <span :class="{'notice': warnRate}">{{ bugRate }}%</span>
-            </div>
+            </div> -->
           </div>
           <div class="general">
             <plan-analysis-card type="story" :data="result.story" title="需求" style="margin-right: 12px;" @click="handleCompareList" />

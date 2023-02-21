@@ -5,7 +5,7 @@ const options = process.env;
 const envConfigEntity = envConfig[options.VUE_APP_ENV||'dev']
 class WebSocketUtil {
   url= process.env.NODE_ENV === "production"?
-    "http://127.0.0.1:12345/oflywork/ws":
+    "http://192.168.100.100:22345/oflywork/ws":
     `${envConfigEntity.target}oflywork/ws`;
   websocket = null;
   stompClient = null;
