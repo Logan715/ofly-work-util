@@ -20,53 +20,8 @@
           />
         </el-select>
       </div>
-      <el-table 
-        :data="planList" 
-        border 
-        stripe 
-        header-row-class-name="ofly-table-head"
-        height="calc(100% - 48px)"
-      >
-        <el-table-column prop="id" label="计划编号" :width="80" align="center" />
-        <el-table-column prop="name" show-overflow-tooltip>
-          <template #header>
-            <span>计划名称</span>
-            <el-popover
-              v-if="list.length"
-              placement="right"
-              width="300"
-              trigger="hover"
-              @show="handleShow"
-            >
-              <template>
-                <el-input ref="filterInput" v-model="searchStr" clearable />
-              </template>
-              <i slot="reference" style="padding-left:4px" class="el-icon-location"></i>
-            </el-popover>
-            
-          </template>
-        </el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip />
-        <el-table-column prop="devFinishedDate" label="开发完成日期" :width="120" align="center" />
-        <el-table-column prop="checkFinishedDate" label="更新验收日期" :width="120" align="center" />
-        
-        <el-table-column prop="focus" label="是否被关注" :width="100" align="center">
-          <template #default="{ row }">
-            <i v-if="row.focus" class="el-icon-check" style="font-size: 18px;color: green;font-weight: bold;"></i>
-            <span v-else>-</span>
-          </template>
-          
-        </el-table-column>
-        <el-table-column prop="handle" label="操作" :width="80" align="center">
-          <template #default="{ row }">
-            <el-button type="text" @click="toggleFocus(row.id)">{{ row.focus?"取消关注": "关注" }}</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <PlanManagerList :user="user" :production-id="productionId" @handle-finished="loadData" />
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="reloadPlan()">刷新计划</el-button>
-    </span>
   </el-dialog>
 </template>
 <script>
@@ -76,9 +31,12 @@ import {
   getPlanList ,
   toggleFocusPlan,
 } from '../../api'
-import WebSockeUtil from '@/utils/WebSockeUtil'
+import PlanManagerList from '../PlanManager/PlanManagerList.vue'
 
 export default {
+  components: {
+    PlanManagerList
+  },
   props: {
     visible: Boolean,
     user: {
@@ -94,44 +52,12 @@ export default {
       list: [],
     }
   },
-  computed: {
-    planList() {
-      if(this.searchStr) {
-        return this.list.filter(row=> row.name.includes(this.searchStr))
-      }
-      return this.list;
-    }
-  },
   watch: {
     visible(val) {
       if(val) {
         this.getFocusProductionList()
       }
     }
-  },
-  mounted() {
-    WebSockeUtil.subscribe("/zentao/plan", response=> {
-      const body = JSON.parse(response.body)
-      console.log("/zentao/plan", body)
-      if(body.type === "success") {
-        this.$notify({
-          title: '成功',
-          message: '已获取最新计划列表',
-          duration: 0,
-          type: 'success',
-          position: 'bottom-right'
-        })
-        setTimeout(this.loadData, 1000)
-      } else {
-        this.$notify.error({
-          title: '失败',
-          message: '失败了，稍后查问题',
-          duration: 0,
-          position: 'bottom-right'
-        })
-      }
-      
-    })
   },
   methods: {
     async getFocusProductionList() {

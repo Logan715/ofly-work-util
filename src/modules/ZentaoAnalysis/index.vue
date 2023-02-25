@@ -13,6 +13,7 @@
     </div>
     <el-tabs tab-position="left" style="margin-top: 10px;padding-top: 10px;border-top: 1px solid rgb(220, 223, 230)">
       <el-tab-pane label="计划分析"><plan-analysis-panel :user="user" /></el-tab-pane>
+      <el-tab-pane label="项目进度"><production-Panel :user="user" /></el-tab-pane>
       <el-tab-pane label="完成的任务"><task-panel :user="user" /></el-tab-pane>
     </el-tabs>
   </div>
@@ -22,12 +23,14 @@ import PlanAnalysisPanel from './views/PlanAnalysisPanel.vue'
 import TaskPanel from './views/TaskPanel.vue'
 import ProductionManagerButton from './views/ProductionManager/ProductionManagerButton.vue'
 import PlanManagerButton from './views/PlanManager/PlanManagerButton.vue'
+import ProductionPanel from './views/ProductionPanel/index.vue'
 export default {
   components: {
     ProductionManagerButton,
     PlanManagerButton,
     PlanAnalysisPanel,
-    TaskPanel
+    TaskPanel,
+    ProductionPanel
   },
   data() {
     return {

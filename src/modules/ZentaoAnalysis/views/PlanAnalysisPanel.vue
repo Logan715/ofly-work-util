@@ -20,7 +20,6 @@
       />
     </div>
     <el-button type="primary" class="mr" style="margin-bottom: 12px;" :disabled="!canGetExport" @click="getAnalysisPlanResult">获取分析报告</el-button>
-    <!-- <el-button type="primary" style="margin-bottom: 12px;" :disabled="!canCopyLink" @click="handleCopyLink">复制链接</el-button> -->
     <el-dropdown 
       class="mr"
       :disabled="!canCopyLink"
@@ -79,6 +78,7 @@ import html2canvas from 'html2canvas'
 import moment from 'moment'
 import * as clipboard from "clipboard-polyfill";
 import numeral from 'numeral'
+import { v4 as uuidv4 } from 'uuid'
 export default {
   components: {
     PlanAnalysisCard,
@@ -102,6 +102,7 @@ export default {
       compareList: [],
       type: undefined,
       selectedRows: [],
+      token: uuidv4(),
     }
   },
   computed: {
@@ -163,7 +164,7 @@ export default {
     }
   },
   mounted() {
-    WebSockeUtil.subscribe("/zentao/analysis", response=> {
+    WebSockeUtil.subscribe(`/zentao/analysis/${this.token}`, response=> {
       const body = JSON.parse(response.body)
       if(body.type === "success") {
         this.$notify({
@@ -207,7 +208,7 @@ export default {
     async analysis() {
      this.loading = true;
      try {
-       const { note } = await analysisPlan({...this.user, planId: this.planId})
+       const { note } = await analysisPlan({...this.user, planId: this.planId, token: this.token})
       this.$message.success(note);
       // setTimeout(this.getAnalysisDateList, 500)
      } catch(e) {console.log(e)}
