@@ -31,6 +31,9 @@
             <div class="title mb">
               <div>
                 <span>{{ general.productionName }}</span>
+                <span v-if="general.frontEndName ||general.backEndName " class="resp">
+                  [{{ [general.frontEndName,general.backEndName].filter(val=>val).join('-') }}]
+                </span>
               </div>
               <div>
                 <span v-if="planId" style="color: #1cc91c;margin-right: 4px;">[{{ planId }}]</span>  
@@ -168,5 +171,10 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: lightgoldenrodyellow;
+}
+.resp {
+  vertical-align: sub;
+  font-size: 18px;
+  color: brown;
 }
 </style>

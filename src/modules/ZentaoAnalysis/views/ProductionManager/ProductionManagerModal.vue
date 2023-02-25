@@ -32,6 +32,8 @@
             
           </template>
         </el-table-column>
+        <el-table-column prop="frontEndName" label="前端" :width="80" align="center" />
+        <el-table-column prop="backEndName" label="后端" :width="80" align="center" />
         <el-table-column prop="focus" label="是否被关注" :width="100" align="center">
           <template #default="{ row }">
             <i v-if="row.focus" class="el-icon-check" style="font-size: 18px;color: green;font-weight: bold;"></i>
@@ -41,7 +43,7 @@
         </el-table-column>
         <el-table-column prop="handle" label="操作" :width="80" align="center">
           <template #default="{ row }">
-            <el-button type="text" @click="toggleFocus(row.id)">{{ row.focus?"取消关注": "关注" }}</el-button>
+            <el-button type="text" :class="{'danger':row.focus}" @click="toggleFocus(row.id)">{{ row.focus?"取注": "关注" }}</el-button>
           </template>
         </el-table-column>
       </el-table>

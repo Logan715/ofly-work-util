@@ -1,5 +1,5 @@
 import axios from "axios";
-import {EventEmitter} from "events";
+import { EventEmitter } from "events";
 
 const emitter = new EventEmitter();
 
@@ -14,66 +14,49 @@ const codeMessage = {
     500: "服务器发生错误，请检查服务器",
     502: "网关错误",
     503: "服务不可用，服务器暂时过载或维护",
-    504: "网关超时"
+    504: "网关超时",
 };
 
 const defaultConfig = {
     timeout: 10000,
-    withCredentials: false
+    withCredentials: false,
 };
-export const post = (url, params, config = {}) =>
-{
+export const post = (url, params, config = {}) => {
     return axios
-        .post(url, params, {...defaultConfig, ...config})
-        .then(res => res.data
-)
-.
-    catch(errorCatch);
-}
-;
+        .post(url, params, { ...defaultConfig, ...config })
+        .then((res) => res.data)
+        .catch(errorCatch);
+};
 
-export const get = (url, params, config = {}) =>
-{
+export const get = (url, params, config = {}) => {
     return axios
-        .get(url, params, {...defaultConfig, ...config})
-        .then(res => res.data
-)
-.
-    catch(errorCatch);
-}
-;
+        .get(url, params, { ...defaultConfig, ...config })
+        .then((res) => res.data)
+        .catch(errorCatch);
+};
 
-const errorCatch = error =>
-{
-    const {response} = error;
-    const {status, statusText} = response;
+const errorCatch = (error) => {
+    const { response } = error;
+    const { status, statusText } = response;
     httpStatusErrorEmitter(response);
     return {
         code: -1,
         note: Object.keys(codeMessage)
-            .map(code => parseInt(code)
-)
-.
-    includes(status)
-        ? codeMessage[status]
-        : statusText
-}
-    ;
-}
-;
-export const httpStatusErrorListener = func =>
-{
+            .map((code) => parseInt(code))
+            .includes(status)
+            ? codeMessage[status]
+            : statusText,
+    };
+};
+export const httpStatusErrorListener = (func) => {
     emitter.addListener("httpError", func);
-}
-;
+};
 
-const httpStatusErrorEmitter = response =>
-{
+const httpStatusErrorEmitter = (response) => {
     emitter.emit("httpError", response);
-}
-;
+};
 export default {
     post,
     get,
-    httpStatusErrorListener
+    httpStatusErrorListener,
 };
