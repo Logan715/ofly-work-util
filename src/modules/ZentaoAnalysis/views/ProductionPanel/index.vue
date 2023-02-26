@@ -3,6 +3,7 @@
     <div style="display: flex;" class="mb">
       <div style="width: 50%;">
         <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="handleScheduleGeneral">进度信息</el-button>
+        <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="fetchLatestData">拉取最新数据</el-button>
         <el-button type="primary" class="mb" @click="handleScreenshots">截图</el-button>
 
         <el-table 
@@ -55,12 +56,15 @@ import {
   getFocusProductionPlanList,
   getAnalysisDateList,
   getAnalysisPlanResult,
+  fetchLatestData
  } from '../../api'
 import PlanManagerList from '../PlanManager/PlanManagerList.vue'
 import PlanAnalysisCard from '../PlanAnalysisCard.vue'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 import * as clipboard from "clipboard-polyfill";
+import { v4 as uuidv4 } from 'uuid'
+import WebSockeUtil from '@/utils/WebSockeUtil'
 
 export default {
   components: {
@@ -81,9 +85,32 @@ export default {
       selectedRows: [],
       editRow: {},
       generals: [],
+      token: uuidv4()
     }
   },
   mounted () {
+    WebSockeUtil.subscribe(`/zentao/plan/${this.token}`, response=> {
+      const body = JSON.parse(response.body)
+      console.log("/zentao/plan", body)
+      if(body.type === "success") {
+        this.$notify({
+          title: '成功',
+          message: body.message,
+          duration: 0,
+          type: 'success',
+          position: 'bottom-right'
+        })
+        setTimeout(this.loadData, 1000)
+      } else {
+        this.$notify.error({
+          title: '失败',
+          message: body.message,
+          duration: 0,
+          position: 'bottom-right'
+        })
+      }
+    })
+
     this.loadData()  
   },
   methods: {
@@ -101,6 +128,15 @@ export default {
       try {
         const generals = await Promise.all(planIds.map(planId=>this.fetchScehduleGeneralByPlanId(planId)))
         this.generals = generals
+      } catch(e) {console.log(e)}
+      this.loading = false;
+    },
+    async fetchLatestData() {
+      const planIds = this.selectedRows.map(({planId})=>planId);
+      this.loading = true;
+      try {
+        const { note } = await fetchLatestData({...this.user,planIds, token: this.token})
+        this.$message.success(note)
       } catch(e) {console.log(e)}
       this.loading = false;
     },
@@ -137,6 +173,7 @@ export default {
     handleScheduleGeneral() {
       this.fetchScheduleGeneral()
     },
+    
     async handleScreenshots() {
       const that = this
       const canvas = await html2canvas(this.$refs.content, { useCORS: true })

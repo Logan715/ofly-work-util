@@ -53,6 +53,11 @@ export const getAnalysisPlanResult = (planId, dates) => {
   return RequestUtil.post("/oflywork/zentao/analysis/plan/result", {planId, dates: dates});
 }
 
+export const fetchLatestData = ({userName, password, planIds, token}) => {
+  return RequestUtil.post("/oflywork/zentao/analysis/plan/plans", {userName, password, planIds, token});
+
+}
+
 export const getCompareList = ({
   planId,
   type,
