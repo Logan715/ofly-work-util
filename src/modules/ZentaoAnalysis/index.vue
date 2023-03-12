@@ -2,8 +2,8 @@
   <div>
     <div class="user">
       <div style="flex: 1;display: flex;">
-        <div class="label">用户名：</div><el-input v-model="user.userName" class="input" />
-        <div class="label">密码：</div><el-input v-model="user.password" class="input" type="password" />
+        <div class="label">用户名：</div><el-input v-model="user.userName" class="input" @change="userNameChange" />
+        <div class="label">密码：</div><el-input v-model="user.password" class="input" type="password" @change="passwordChange " />
       </div>
       <div>
         <ProductionManagerButton :user="user" />
@@ -33,16 +33,23 @@ export default {
     ProductionPanel
   },
   data() {
+    const userName= localStorage.getItem(`userName`)
+    const password= localStorage.getItem(`password`)
     return {
       visible: false,
       user: {
-        userName: 'chenmingzhi',
-        password: 'cmingzhi1990',
+        userName,
+        password,
       }
     }
   },
   methods: {
-    
+    userNameChange(val) {
+      localStorage.setItem(`userName`, val)
+    },
+    passwordChange(val) {
+      localStorage.setItem(`password`, val)
+    },
   }
 }
 </script>
