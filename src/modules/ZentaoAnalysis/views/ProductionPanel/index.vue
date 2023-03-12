@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div style="display: flex;" class="mb">
+    <div v-loading="loading" style="display: flex;" class="mb">
       <div style="width: 50%;">
+        <el-button class="mb" type="primary" @click="loadData()">刷新列表</el-button>
         <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="handleScheduleGeneral">进度信息</el-button>
         <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="fetchLatestData">拉取最新数据</el-button>
         <el-button type="primary" class="mb" @click="handleScreenshots">截图</el-button>
@@ -19,7 +20,9 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column type="index" width="50" align="center" />
           <el-table-column prop="id" sortable label="项目ID" align="center" width="120" />
-          <el-table-column prop="name" label="项目名称" />
+          <el-table-column prop="name" label="项目名称" show-overflow-tooltip />
+          <el-table-column prop="frontEndName" label="前端" align="center" width="80" />
+          <el-table-column prop="backEndName" label="后端" align="center" width="80" />
           <el-table-column prop="checkFinishedDate" sortable label="最近计划日期" align="center" width="140" />
         </el-table>
       </div>
@@ -27,6 +30,8 @@
     </div>
     <div class="content">
       <div ref="content" style="display: inline-grid;">
+        <PlanAnalysis v-for="planId in planIds" :key="planId" :user="user" :plan-id="planId" />
+        <!--         
         <div v-for="(general, index) in generals" :key="`${index}`" class="general">
           <div ref="contentGeneral">
             <div class="title mb">
@@ -46,7 +51,7 @@
               <plan-analysis-card type="bug" :data="general.bug" title="Bug" />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -59,17 +64,19 @@ import {
   fetchLatestData
  } from '../../api'
 import PlanManagerList from '../PlanManager/PlanManagerList.vue'
-import PlanAnalysisCard from '../PlanAnalysisCard.vue'
+// import PlanAnalysisCard from '../PlanAnalysisCard.vue'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 import * as clipboard from "clipboard-polyfill";
 import { v4 as uuidv4 } from 'uuid'
 import WebSockeUtil from '@/utils/WebSockeUtil'
+import PlanAnalysis from '../PlanManager/PlanAnalysis.vue'
 
 export default {
   components: {
     PlanManagerList,
-    PlanAnalysisCard
+    // PlanAnalysisCard,
+    PlanAnalysis
   },
   props: {
     user: {
@@ -83,6 +90,7 @@ export default {
       list: [],
       planList: [],
       selectedRows: [],
+      planIds: [],
       editRow: {},
       generals: [],
       token: uuidv4()
@@ -123,13 +131,14 @@ export default {
       this.loading = false;
     },
     async fetchScheduleGeneral() {
-      const planIds = this.selectedRows.map(({planId})=>planId);
-      this.loading = true;
-      try {
-        const generals = await Promise.all(planIds.map(planId=>this.fetchScehduleGeneralByPlanId(planId)))
-        this.generals = generals
-      } catch(e) {console.log(e)}
-      this.loading = false;
+      // const planIds = this.selectedRows.map(({planId})=>planId);
+      this.planIds = this.selectedRows.map(({planId})=>planId);
+      // this.loading = true;
+      // try {
+      //   const generals = await Promise.all(planIds.map(planId=>this.fetchScehduleGeneralByPlanId(planId)))
+      //   this.generals = generals
+      // } catch(e) {console.log(e)}
+      // this.loading = false;
     },
     async fetchLatestData() {
       const planIds = this.selectedRows.map(({planId})=>planId);

@@ -6,6 +6,20 @@
   "description": "ofly-vue-demo 测试用",
   "glyphs": [
     {
+      "icon_id": "17418031",
+      "name": "refresh",
+      "font_class": "refresh",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "11348933",
+      "name": "clear-l",
+      "font_class": "clear",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
       "icon_id": "8952769",
       "name": "ellipsis-v",
       "font_class": "ellipsis-v",
