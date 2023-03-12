@@ -23,6 +23,7 @@
     <PlanAnalysisCompareToolbar 
       :visible="toolbarVisible" 
       :position="position" 
+      :selected-rows="selectedRows"
       @command="handleComand"
     />
   </div>

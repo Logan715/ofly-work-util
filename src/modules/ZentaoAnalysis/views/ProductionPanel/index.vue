@@ -3,11 +3,9 @@
     <div v-loading="loading" style="display: flex;" class="mb">
       <div style="width: 50%;">
         <el-button class="mb" type="primary" @click="loadData()">刷新列表</el-button>
-        <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="handleScheduleGeneral">进度信息</el-button>
-        <el-button class="mb" :disabled="!selectedRows.length" type="primary" @click="fetchLatestData">拉取最新数据</el-button>
         <el-button type="primary" class="mb" @click="handleScreenshots">截图</el-button>
-
         <el-table 
+          ref="table"
           :data="list" 
           height="50vh"
           border 
@@ -31,27 +29,6 @@
     <div class="content">
       <div ref="content" style="display: inline-grid;">
         <PlanAnalysis v-for="planId in planIds" :key="planId" :user="user" :plan-id="planId" />
-        <!--         
-        <div v-for="(general, index) in generals" :key="`${index}`" class="general">
-          <div ref="contentGeneral">
-            <div class="title mb">
-              <div>
-                <span>{{ general.productionName }}</span>
-                <span v-if="general.frontEndName ||general.backEndName " class="resp">
-                  [{{ [general.frontEndName,general.backEndName].filter(val=>val).join('-') }}]
-                </span>
-              </div>
-              <div>
-                <span v-if="planId" style="color: #1cc91c;margin-right: 4px;">[{{ planId }}]</span>  
-                <span>{{ general.planName }}</span>
-              </div>
-            </div>
-            <div class="general">
-              <plan-analysis-card type="story" :data="general.story" title="需求" style="margin-right: 12px;" />
-              <plan-analysis-card type="bug" :data="general.bug" title="Bug" />
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -59,8 +36,6 @@
 <script>
 import { 
   getFocusProductionPlanList,
-  getAnalysisDateList,
-  getAnalysisPlanResult,
   fetchLatestData
  } from '../../api'
 import PlanManagerList from '../PlanManager/PlanManagerList.vue'
@@ -90,10 +65,14 @@ export default {
       list: [],
       planList: [],
       selectedRows: [],
-      planIds: [],
       editRow: {},
       generals: [],
       token: uuidv4()
+    }
+  },
+  computed: {
+    planIds() {
+      return this.selectedRows.map(({planId})=>planId);
     }
   },
   mounted () {
@@ -130,16 +109,7 @@ export default {
       } catch(e) {console.log(e)}
       this.loading = false;
     },
-    async fetchScheduleGeneral() {
-      // const planIds = this.selectedRows.map(({planId})=>planId);
-      this.planIds = this.selectedRows.map(({planId})=>planId);
-      // this.loading = true;
-      // try {
-      //   const generals = await Promise.all(planIds.map(planId=>this.fetchScehduleGeneralByPlanId(planId)))
-      //   this.generals = generals
-      // } catch(e) {console.log(e)}
-      // this.loading = false;
-    },
+    
     async fetchLatestData() {
       const planIds = this.selectedRows.map(({planId})=>planId);
       this.loading = true;
@@ -149,23 +119,16 @@ export default {
       } catch(e) {console.log(e)}
       this.loading = false;
     },
-    async fetchScehduleGeneralByPlanId(planId) {
-      const { records } = await getAnalysisDateList(planId)
-      let selectDates = []
-      if(records?.length > 1) {
-        selectDates = [records[1], records[0]]
-      } else {
-        selectDates = [records[0], records[0]]
-      } 
-      const {code, data, note } = await getAnalysisPlanResult(planId, selectDates)
-      if(code ==1) {
-        return Promise.resolve(data)
-      } else {
-        return Promise.reject(note)
-      }
-    },
     showPlans(row) {
       this.editRow = row
+      this.$refs.table.toggleRowSelection(row);
+      // const finder = this.selectedRows.find(({planId})=>planId===row.planId)
+      // if(finder) {
+      //   this.selectedRows = this.selectedRows.filter(({planId})=>planId!==row.planId)
+      // } else {
+      //   this.selectedRows.push(row)
+      // }
+
     },
     tableRowClassName({row}) {
       if(row.id===this.editRow.id) {
@@ -178,9 +141,6 @@ export default {
     },
     handleSelectionChange(rows) {
       this.selectedRows = rows
-    },
-    handleScheduleGeneral() {
-      this.fetchScheduleGeneral()
     },
     
     async handleScreenshots() {
