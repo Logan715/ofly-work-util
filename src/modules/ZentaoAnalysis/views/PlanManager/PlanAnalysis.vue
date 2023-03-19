@@ -4,7 +4,7 @@
     @mouseenter="hover=true"
     @mouseleave="hover=false"
   >
-    <div ref="contentGeneral">
+    <div ref="contentGeneral" class="block">
       <div class="title mb">
         <div>
           <span>{{ general.productionName }}</span>
@@ -82,7 +82,7 @@ export default {
       if(body.type === "success") {
         this.$notify({
           title: '成功',
-          message: '已经分析完成',
+          message: body.message,
           duration: 0,
           type: 'success',
           position: 'bottom-right'
@@ -91,7 +91,7 @@ export default {
       } else {
         this.$notify.error({
           title: '失败',
-          message: '失败了，稍后查问题',
+          message: body.message,
           duration: 0,
           position: 'bottom-right'
         })
@@ -106,9 +106,11 @@ export default {
         let selectDates = []
         if(records?.length > 1) {
           selectDates = [records[1], records[0]]
-        } else {
+        } else if(records?.length === 1){
           selectDates = [records[0], records[0]]
-        } 
+        } else {
+          selectDates = []
+        }
         this.dates = selectDates
         const { data } = await getAnalysisPlanResult(this.planId, selectDates)
         this.general = data
@@ -168,5 +170,10 @@ export default {
     font-size: 24px;
 
   }
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
