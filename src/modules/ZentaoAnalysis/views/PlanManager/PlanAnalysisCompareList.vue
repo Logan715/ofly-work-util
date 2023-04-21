@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="data" border stripe header-row-class-name="ofly-table-head" @selection-change="handleSelectionChange">
+    <el-table style="width: 980px" :data="data" border stripe header-row-class-name="ofly-table-head" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column type="index" width="50" align="center" />
       <el-table-column v-if="isBug" prop="bugId" label="bugID" width="80" align="center">

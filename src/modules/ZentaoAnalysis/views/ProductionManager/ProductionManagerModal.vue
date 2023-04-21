@@ -60,7 +60,7 @@ import {
   toggleFocusProduction
 } from '../../api'
 import WebSockeUtil from '@/utils/WebSockeUtil'
-
+import pinyin from 'js-pinyin'
 export default {
   props: {
     visible: Boolean,
@@ -78,7 +78,14 @@ export default {
   computed: {
     productionList() {
       if(this.searchStr) {
-        return this.list.filter(row=> row.name.includes(this.searchStr))
+        return this.list.filter(row=> {
+          const fullName = pinyin.getFullChars(row.name).toLowerCase();
+					const camelChars = pinyin.getCamelChars(row.name).toLowerCase();
+
+          return row.name.includes(this.searchStr) || 
+          fullName.includes(this.searchStr.toLowerCase()) ||
+					camelChars.includes(this.searchStr.toLowerCase())
+        })
       }
       return this.list;
     }

@@ -13,14 +13,20 @@ class WebSocketUtil {
   stompClient = null;
   isConnect = false;
   connect() {
-    const websocket = new SockJS(this.url);
+    const websocket = new SockJS(this.url, undefined, {
+      transportOptions: {
+        token: `11111`
+      }
+    });
     this.websocket = websocket;
     const stompClient = Stomp.over(websocket);
     stompClient.debug = null //关闭控制台打印
     stompClient.heartbeat.outgoing = 20000;
     stompClient.heartbeat.incoming = 0;//客户端不从服务端接收心跳包
     stompClient.connect(
-      {},
+      {
+        token: `11111`
+      },
       () => {
         console.log('连接成功')
         //  stompClient.subscribe('/zentao/analysis', function (response) {

@@ -4,6 +4,7 @@
       <div style="width: 50%;">
         <el-button class="mb" type="primary" @click="loadData()">刷新列表</el-button>
         <el-button type="primary" class="mb" @click="handleScreenshots">截图</el-button>
+        <el-button type="primary" class="mb" @click="handleTest">保存截图</el-button>
         <el-table 
           ref="table"
           :data="list" 
@@ -153,6 +154,17 @@ export default {
         that.$message.success('复制完成')
       })
     },
+    async handleTest() {
+      const canvas = await html2canvas(this.$refs.content, { useCORS: true })
+      debugger
+      const url = canvas.toDataURL("image/png")
+      const oA = document.createElement("a");
+      oA.download = '';// 设置下载的文件名，默认是'下载'
+      oA.href = url;
+      document.body.appendChild(oA);
+      oA.click();
+      oA.remove(); // 下载之后把创建的元素删除
+    }
   }
 }
 </script>

@@ -10,10 +10,12 @@
         <el-select 
           v-model="productionId" 
           placeholder="请选择产品"
+          filterable
+          :filter-method="filterSelect"
           @change="handleLoadData"
         >
           <el-option
-            v-for="production in focusProductionList"
+            v-for="production in focusProductionOptions"
             :key="production.id"
             :label="production.name"
             :value="production.id" 
@@ -32,6 +34,7 @@ import {
   toggleFocusPlan,
 } from '../../api'
 import PlanManagerList from '../PlanManager/PlanManagerList.vue'
+import pinyin from 'js-pinyin'
 
 export default {
   components: {
@@ -50,6 +53,21 @@ export default {
       productionId: undefined,
       focusProductionList: [],
       list: [],
+    }
+  },
+  computed: {
+    focusProductionOptions() {
+      if(this.searchStr) {
+        return this.focusProductionList.filter(row=> {
+          const fullName = pinyin.getFullChars(row.name).toLowerCase();
+					const camelChars = pinyin.getCamelChars(row.name).toLowerCase();
+
+          return row.name.includes(this.searchStr) || 
+          fullName.includes(this.searchStr.toLowerCase()) ||
+					camelChars.includes(this.searchStr.toLowerCase())
+        })
+      }
+      return this.focusProductionList
     }
   },
   watch: {
@@ -102,6 +120,9 @@ export default {
         console.error(e);
       }
       loading.close()
+    },
+    filterSelect(searchStr) {
+      this.searchStr = searchStr
     },
     handleLoadData(productionId) {
       this.loadData(productionId)
