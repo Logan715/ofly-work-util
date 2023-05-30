@@ -29,7 +29,13 @@
     </div>
     <div class="content">
       <div ref="content" style="display: inline-grid;">
-        <PlanAnalysis v-for="planId in planIds" :key="planId" :user="user" :plan-id="planId" />
+        <PlanAnalysis 
+          v-for="planId in planIds" 
+          :key="planId" 
+          :user="user" 
+          :plan-id="planId" 
+          @remove="handleRemove"
+        />
       </div>
     </div>
   </div>
@@ -164,6 +170,13 @@ export default {
       document.body.appendChild(oA);
       oA.click();
       oA.remove(); // 下载之后把创建的元素删除
+    },
+    handleRemove(planId) {
+      const removeRow = this.selectedRows.find(selectedRow=>selectedRow.planId === planId)
+      if(removeRow) {
+        this.$refs.table.toggleRowSelection(removeRow);
+        this.selectedRows = this.selectedRows.filter((selectRow)=>selectRow.planId !== planId)
+      }
     }
   }
 }

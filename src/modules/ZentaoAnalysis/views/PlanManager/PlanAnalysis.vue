@@ -18,6 +18,7 @@
           <span class="toolbar">
             <i v-if="hover && type" class="el-icon-ofly-clear iconfont " @click="type=undefined"></i>
             <i v-if="hover" class="el-icon-ofly-refresh iconfont " @click="refresh"></i>
+            <i v-if="hover" class="el-icon-ofly-remove iconfont " @click="remove"></i>
           </span>
         </div>
       </div>
@@ -131,6 +132,9 @@ export default {
     },
     refresh() {
       this.analysis()
+    },
+    remove() {
+      this.$emit('remove', this.planId)
     }
   }
 }
