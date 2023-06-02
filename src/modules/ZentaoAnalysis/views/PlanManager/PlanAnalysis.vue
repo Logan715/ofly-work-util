@@ -19,6 +19,7 @@
             <i v-if="hover && type" class="el-icon-ofly-clear iconfont " @click="type=undefined"></i>
             <i v-if="hover" class="el-icon-ofly-refresh iconfont " @click="refresh"></i>
             <i v-if="hover" class="el-icon-ofly-remove iconfont " @click="remove"></i>
+            <i v-if="hover" class="el-icon-ofly-unlink iconfont " @click="unlink"></i>
           </span>
         </div>
       </div>
@@ -44,6 +45,7 @@ import {
   analysisPlan, 
   getAnalysisDateList,
   getAnalysisPlanResult,
+  toggleFocusPlan
  } from '../../api'
 import WebSockeUtil from '@/utils/WebSockeUtil'
 import { v4 as uuidv4 } from "uuid";
@@ -126,6 +128,18 @@ export default {
      } catch(e) {console.log(e)}
      this.loading = false;
     },
+    async toggleFocus(id) {
+      const loading = this.$loading()
+      try {
+        await toggleFocusPlan(id);
+        this.$message.success('操作成功')
+        setTimeout(this.loadData, 50)
+        this.$emit('handle-finished')
+      } catch(e) {
+        console.error(e);
+      }
+      loading.close()
+    },
     handleCompareList({ type, state }) {
       this.type = type;
       this.state = state
@@ -135,6 +149,15 @@ export default {
     },
     remove() {
       this.$emit('remove', this.planId)
+    },
+    unlink() {
+      this.$confirm('确定取消关注?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(() => {
+          this.toggleFocus(this.planId)
+          this.remove()
+        })
     }
   }
 }
@@ -172,7 +195,7 @@ export default {
   color: brown;
   i {
     font-size: 24px;
-
+    margin-right: 20px;
   }
 }
 .block {
