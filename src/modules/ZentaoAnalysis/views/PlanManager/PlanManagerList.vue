@@ -101,7 +101,7 @@ export default {
       } else {
         this.$notify.error({
           title: '失败',
-          message: '失败了，稍后查问题',
+          message: `${body.message.slice(0,200)}...`,
           duration: 0,
           position: 'bottom-right'
         })
